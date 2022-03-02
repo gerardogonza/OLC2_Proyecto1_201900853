@@ -27,5 +27,6 @@ func (p Imprimir) Ejecutar(env interface{}) interface{} {
 
 	result = p.Expresion.Ejecutar(env)
 	CodigoEntrada.Salida += fmt.Sprintln(result.Valor)
+
 	return result.Valor
 }

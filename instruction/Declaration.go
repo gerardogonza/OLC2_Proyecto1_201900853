@@ -38,6 +38,12 @@ func (p Declaration) Ejecutar(env interface{}) interface{} {
 		if result.Tipo == interfaces.INTEGER {
 			env.(environment.Environment).SaveVariable(p.Id, result, interfaces.INTEGER, p.Muteable)
 		}
+		if result.Tipo == interfaces.TRUE {
+			env.(environment.Environment).SaveVariable(p.Id, result, interfaces.TRUE, p.Muteable)
+		}
+		if result.Tipo == interfaces.FALSE {
+			env.(environment.Environment).SaveVariable(p.Id, result, interfaces.FALSE, p.Muteable)
+		}
 	} else {
 		CodigoEntrada.Salida += "ERROR: El tipo de la Variable \"" + p.Id + "\" es diferente al valor Declarado! \n"
 

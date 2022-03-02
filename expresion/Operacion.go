@@ -21,6 +21,7 @@ func NewOperacion(Op1 interfaces.Expresion, Operador string, Op2 interfaces.Expr
 }
 
 func (p Aritmetica) Ejecutar(env interface{}) interfaces.Symbol {
+
 	suma_resta_dominante := [5][5]interfaces.TipoExpresion{
 		//INTEGER			//FLOAT			   //STRING			  //BOOLEAN		   //NULL
 		//INTEGER
@@ -272,7 +273,12 @@ func (p Aritmetica) Ejecutar(env interface{}) interfaces.Symbol {
 				fmt.Print("ERROR: No es posible hacer mod")
 			}
 		}
+	case "!":
+		{
 
+			fmt.Print("ERROR: No es posible hacer mod")
+
+		}
 	}
 
 	return interfaces.Symbol{Id: "", Tipo: interfaces.INTEGER, Valor: resultado}

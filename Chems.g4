@@ -36,9 +36,11 @@ instruccion returns [interfaces.Instruction instr]
   | P_LET muteable=mut isArray=array_st id=ID DOSPUNTOS isTipo=tipo IGUAL expression ';'{$instr = instruction.NewDeclaration($id.text,$isTipo.p,$expression.p, $isArray.arr,$muteable.arr)	}
   | P_LET muteable=mut isArray=array_st id=ID IGUAL expression ';'{$instr = instruction.NewDeclaration($id.text,interfaces.NULL,$expression.p, $isArray.arr,$muteable.arr)	}
   | id=ID '=' expression ';'{$instr = instruction.NewAssignment($id.text,$expression.p)}
-  | P_IF PARIZQ expression PARDER LLAVEIZQ instrucciones LLAVEDER  {$instr = instruction.NewIf($expression.p, $instrucciones.l)}
-  | P_WHILE PARIZQ expression PARDER LLAVEIZQ instrucciones LLAVEDER  {$instr = instruction.NewWhile($expression.p, $instrucciones.l)}                                                            
-;
+  | P_IF expression LLAVEIZQ instrucciones LLAVEDER  {$instr = instruction.NewIf($expression.p, $instrucciones.l,false,nil)}
+  | P_IF expression LLAVEIZQ i1=instrucciones LLAVEDER P_ELSE LLAVEIZQ i2=instrucciones LLAVEDER {$instr = instruction.NewIf($expression.p, $i1.l,true,$i2.l)}
+  | P_WHILE expression LLAVEIZQ instrucciones LLAVEDER  {$instr = instruction.NewWhile($expression.p, $instrucciones.l)}                                                            
+; 
+
 tipo returns[interfaces.TipoExpresion p]
 :P_F64{$p=interfaces.FLOAT}
 |P_I64{$p=interfaces.INTEGER}
@@ -62,7 +64,7 @@ expr_arit returns[interfaces.Expresion p]
     : opIz = expr_arit op=('*'|'/') opDe = expr_arit {$p = expresion.NewOperacion($opIz.p,$op.text,$opDe.p,false)}
     | opIz = expr_arit op=('+'|'-') opDe = expr_arit {$p = expresion.NewOperacion($opIz.p,$op.text,$opDe.p,false)}     
     | reservada=(P_F64|P_I64) DOSPUNTOS DOSPUNTOS op=(P_POW|P_POWF) PARIZQ opIz = expr_arit COMA opDe = expr_arit PARDER{$p = expresion.NewOperacion($opIz.p,$op.text,$opDe.p,false)}     
-    | opIz = expr_arit op=('<'|'<='|'>='|'>'|IGUALIGUA|DIFERENTEDE|MODULO|OR|DIFERENTE|AND) opDe = expr_arit {$p = expresion.NewOperacion($opIz.p,$op.text,$opDe.p,false)}        
+    | opIz = expr_arit op=('<'|'<='|'>='|'>'|IGUALIGUA|DIFERENTEDE|MODULO|OR|AND) opDe = expr_arit {$p = expresion.NewOperacion($opIz.p,$op.text,$opDe.p,false)}   
     | CORIZQ listValues CORDER { $p = expresion.NewArray($listValues.l) }
     | primitivo {$p = $primitivo.p} 
     | PARIZQ expression PARDER {$p = $expression.p}
@@ -118,6 +120,10 @@ primitivo returns[interfaces.Expresion p]
             $p = expresion.NewPrimitivo (a,interfaces.FLOAT)
        }  
     |list=listArray { $p = $list.p}
+     | P_TRUE {      
+      $p = expresion.NewPrimitivo("true",interfaces.TRUE)}
+       | P_FALSE {      
+      $p = expresion.NewPrimitivo("false",interfaces.FALSE)}
 ;
 
 listArray returns[interfaces.Expresion p]

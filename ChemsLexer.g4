@@ -7,6 +7,7 @@ PRINTLN:  'println';
 P_NUMBER:   'number';
 P_STRING:   'string';
 P_IF:       'if';
+P_ELSE:       'else';
 P_WHILE:      'while';
 P_POW:       'pow';
 P_POWF:       'powf';
@@ -15,6 +16,8 @@ P_F64:       'f64';
 P_LET:       'let';
 P_MUT:       'mut';
 P_AS:         'as';
+P_TRUE:         'true';
+P_FALSE:         'false';
 
 NUMBER: [0-9]+;
 DECIMAL: [0-9]+'.'[0-9]+;

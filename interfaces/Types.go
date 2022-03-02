@@ -8,6 +8,7 @@ const (
 	STRING
 	BOOLEAN
 	ARRAY
-
+	TRUE
+	FALSE
 	NULL
 )
