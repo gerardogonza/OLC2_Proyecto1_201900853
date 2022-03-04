@@ -7,6 +7,7 @@ const (
 	FLOAT
 	STRING
 	BOOLEAN
+	CHAR
 	ARRAY
 	TRUE
 	FALSE

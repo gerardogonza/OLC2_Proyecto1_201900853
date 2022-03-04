@@ -20,6 +20,10 @@ P_TRUE:         'true';
 P_FALSE:         'false';
 P_MATCH:         'match';
 P_LOOP:           'loop';
+P_ABS:           'abs';
+P_SQRT:           'sqrt';
+P_TOSTRING:           'to_string';
+P_CLONE:           'clone';
 
 NUMBER: [0-9]+;
 DECIMAL: [0-9]+'.'[0-9]+;

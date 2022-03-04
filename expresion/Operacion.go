@@ -321,10 +321,14 @@ func (p Aritmetica) Ejecutar(env interface{}) interfaces.Symbol {
 		{
 			if retornoIzq.Valor.(bool) || retornoDer.Valor.(bool) {
 
-				return interfaces.Symbol{Id: "", Tipo: interfaces.BOOLEAN, Valor: retornoIzq.Valor.(bool) || retornoDer.Valor.(bool)}
+				return interfaces.Symbol{Id: "", Tipo: interfaces.BOOLEAN, Valor: true}
 
+			} else if retornoIzq.Valor == false || retornoDer.Valor == false {
+
+				return interfaces.Symbol{Id: "", Tipo: interfaces.BOOLEAN, Valor: false}
 			} else {
 				fmt.Println("ERROR: No es posible hacer ||")
+
 			}
 
 		}

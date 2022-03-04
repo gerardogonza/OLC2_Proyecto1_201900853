@@ -39,7 +39,7 @@ instruccion returns [interfaces.Instruction instr]
   | P_IF expression LLAVEIZQ instrucciones LLAVEDER  {$instr = instruction.NewIf($expression.p, $instrucciones.l,false,nil)}
   | P_IF expression LLAVEIZQ i1=instrucciones LLAVEDER P_ELSE LLAVEIZQ i2=instrucciones LLAVEDER {$instr = instruction.NewIf($expression.p, $i1.l,true,$i2.l)}
   | P_WHILE expression LLAVEIZQ instrucciones LLAVEDER  {$instr = instruction.NewWhile($expression.p, $instrucciones.l)}                                                            
-  | P_LOOP LLAVEIZQ instrucciones LLAVEDER  {$instr = instruction.NewLoop($instrucciones.l)}                                                            
+  | P_LOOP LLAVEIZQ instrucciones LLAVEDER  {$instr = instruction.NewLoop($instrucciones.l)}                                                                                                                   
 ; 
 
 tipo returns[interfaces.TipoExpresion p]
@@ -68,7 +68,11 @@ expr_arit returns[interfaces.Expresion p]
     | opIz = expr_arit op=('<'|'<='|'>='|'>'|MODULO|DIFERENTEDE) opDe = expr_arit {$p = expresion.NewOperacion($opIz.p,$op.text,$opDe.p,false)}   
     | opIz = expr_arit op=IGUALIGUA opDe = expr_arit  {$p = expresion.NewOperacion($opIz.p,$op.text,$opDe.p,false)}   
     | opIz = expr_arit op=(OR|AND) opDe = expr_arit  {$p = expresion.NewOperacion($opIz.p,$op.text,$opDe.p,false)}   
-    |  op=DIFERENTE  opDe = expr_arit  {$p = expresion.NewOperacion(nil,$op.text,$opDe.p,false)}   
+    | op=DIFERENTE  opDe = expr_arit  {$p = expresion.NewOperacion(nil,$op.text,$opDe.p,false)}   
+    | opIz = expr_arit PUNTO op=P_ABS PARIZQ PARDER {$p = expresion.NewNativas($opIz.p,$op.text)}   
+    | opIz = expr_arit PUNTO op=P_SQRT PARIZQ PARDER {$p = expresion.NewNativas($opIz.p,$op.text)}   
+    | opIz = expr_arit PUNTO op=P_TOSTRING PARIZQ PARDER {$p = expresion.NewNativas($opIz.p,$op.text)}   
+    | opIz = expr_arit PUNTO op=P_CLONE PARIZQ PARDER {$p = expresion.NewNativas($opIz.p,$op.text)}   
     | CORIZQ listValues CORDER { $p = expresion.NewArray($listValues.l) }
     | primitivo {$p = $primitivo.p} 
     | PARIZQ expression PARDER {$p = $expression.p}
@@ -96,6 +100,22 @@ primitivo returns[interfaces.Expresion p]
                 
             $p = expresion.NewPrimitivo (num,interfaces.INTEGER)
        } 
+    |SUB NUMBER {
+            	num,err := strconv.Atoi($NUMBER.text)
+                if err!= nil{
+                    fmt.Println(err)
+                }
+                
+            $p = expresion.NewPrimitivo (-num,interfaces.INTEGER)
+       } 
+     |SUB DECIMAL {
+            	num,err := strconv.ParseFloat($DECIMAL.text,64)
+                if err!= nil{
+                    fmt.Println(err)
+                }
+                 a := float64(num) 
+            $p = expresion.NewPrimitivo (-a,interfaces.FLOAT)
+       }    
     | STRING { 
               
       str:= $STRING.text[1:len($STRING.text)-1]
@@ -106,8 +126,10 @@ primitivo returns[interfaces.Expresion p]
                 if err!= nil{
                     fmt.Println(err)
                 }
-            $p = expresion.NewPrimitivo (num,interfaces.FLOAT)
+                 a := float64(num) 
+            $p = expresion.NewPrimitivo (a,interfaces.FLOAT)
        } 
+      
     | DECIMAL P_AS P_I64{
             	num,err := strconv.ParseFloat($DECIMAL.text,64)
                 if err!= nil{
