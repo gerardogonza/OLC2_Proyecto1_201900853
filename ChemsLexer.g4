@@ -18,6 +18,8 @@ P_MUT:       'mut';
 P_AS:         'as';
 P_TRUE:         'true';
 P_FALSE:         'false';
+P_MATCH:         'match';
+P_LOOP:           'loop';
 
 NUMBER: [0-9]+;
 DECIMAL: [0-9]+'.'[0-9]+;

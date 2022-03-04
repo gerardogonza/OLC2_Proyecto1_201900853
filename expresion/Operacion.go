@@ -14,7 +14,6 @@ type Aritmetica struct {
 }
 
 func NewOperacion(Op1 interfaces.Expresion, Operador string, Op2 interfaces.Expresion, unario bool) Aritmetica {
-
 	exp := Aritmetica{Op1, Operador, Op2, unario}
 
 	return exp
@@ -54,11 +53,17 @@ func (p Aritmetica) Ejecutar(env interface{}) interfaces.Symbol {
 
 	var retornoIzq interfaces.Symbol
 	var retornoDer interfaces.Symbol
+	if p.Op1 != nil {
 
-	if p.Unario == true {
-		retornoIzq = p.Op1.Ejecutar(env)
+		if p.Unario == true {
+			retornoIzq = p.Op1.Ejecutar(env)
+		} else {
+			retornoIzq = p.Op1.Ejecutar(env)
+			retornoDer = p.Op2.Ejecutar(env)
+
+		}
 	} else {
-		retornoIzq = p.Op1.Ejecutar(env)
+
 		retornoDer = p.Op2.Ejecutar(env)
 	}
 
@@ -203,18 +208,25 @@ func (p Aritmetica) Ejecutar(env interface{}) interfaces.Symbol {
 		}
 	case "==":
 		{
+
 			dominante = relacional_dominante[retornoIzq.Tipo][retornoDer.Tipo]
 
 			if dominante == interfaces.INTEGER {
-
 				return interfaces.Symbol{Id: "", Tipo: interfaces.BOOLEAN, Valor: retornoIzq.Valor.(int) == retornoDer.Valor.(int)}
 
 			} else if dominante == interfaces.FLOAT {
 				return interfaces.Symbol{Id: "", Tipo: interfaces.BOOLEAN, Valor: retornoIzq.Valor.(float64) == retornoDer.Valor.(float64)}
 
+			} else if retornoIzq.Tipo == interfaces.STRING && retornoDer.Tipo == interfaces.STRING {
+				r1 := fmt.Sprintf("%v", retornoIzq.Valor)
+				r2 := fmt.Sprintf("%v", retornoDer.Valor)
+
+				return interfaces.Symbol{Id: "", Tipo: interfaces.BOOLEAN, Valor: r1 == r2}
+
 			} else {
 				fmt.Print("ERROR: No es posible comparar ==")
 			}
+
 		}
 	case "!=":
 		{
@@ -227,8 +239,14 @@ func (p Aritmetica) Ejecutar(env interface{}) interfaces.Symbol {
 			} else if dominante == interfaces.FLOAT {
 				return interfaces.Symbol{Id: "", Tipo: interfaces.BOOLEAN, Valor: retornoIzq.Valor.(float64) != retornoDer.Valor.(float64)}
 
+			} else if retornoIzq.Tipo == interfaces.STRING && retornoDer.Tipo == interfaces.STRING {
+				r1 := fmt.Sprintf("%v", retornoIzq.Valor)
+				r2 := fmt.Sprintf("%v", retornoDer.Valor)
+
+				return interfaces.Symbol{Id: "", Tipo: interfaces.BOOLEAN, Valor: r1 != r2}
+
 			} else {
-				fmt.Print("ERROR: No es posible comparar ==")
+				fmt.Print("ERROR: No es posible comparar !=")
 			}
 		}
 	case "pow":
@@ -264,10 +282,10 @@ func (p Aritmetica) Ejecutar(env interface{}) interfaces.Symbol {
 
 			if dominante == interfaces.INTEGER {
 
-				return interfaces.Symbol{Id: "", Tipo: interfaces.BOOLEAN, Valor: retornoIzq.Valor.(int) % retornoDer.Valor.(int)}
+				return interfaces.Symbol{Id: "", Tipo: interfaces.INTEGER, Valor: retornoIzq.Valor.(int) % retornoDer.Valor.(int)}
 
 			} else if dominante == interfaces.FLOAT {
-				return interfaces.Symbol{Id: "", Tipo: interfaces.BOOLEAN, Valor: math.Mod(retornoIzq.Valor.(float64), retornoDer.Valor.(float64))}
+				return interfaces.Symbol{Id: "", Tipo: interfaces.FLOAT, Valor: math.Mod(retornoIzq.Valor.(float64), retornoDer.Valor.(float64))}
 
 			} else {
 				fmt.Print("ERROR: No es posible hacer mod")
@@ -276,9 +294,41 @@ func (p Aritmetica) Ejecutar(env interface{}) interfaces.Symbol {
 	case "!":
 		{
 
-			fmt.Print("ERROR: No es posible hacer mod")
+			if retornoDer.Tipo == interfaces.FALSE {
+
+				return interfaces.Symbol{Id: "", Tipo: interfaces.BOOLEAN, Valor: true}
+
+			} else if retornoDer.Tipo == interfaces.TRUE {
+				return interfaces.Symbol{Id: "", Tipo: interfaces.BOOLEAN, Valor: false}
+			} else {
+				fmt.Print("ERROR: No es posible hacer: not ")
+			}
 
 		}
+	case "&&":
+		{
+
+			if retornoIzq.Valor.(bool) && retornoDer.Valor.(bool) {
+
+				return interfaces.Symbol{Id: "", Tipo: interfaces.BOOLEAN, Valor: retornoIzq.Valor.(bool) && retornoDer.Valor.(bool)}
+
+			} else {
+				fmt.Println("ERROR: No es posible hacer &&")
+			}
+
+		}
+	case "||":
+		{
+			if retornoIzq.Valor.(bool) || retornoDer.Valor.(bool) {
+
+				return interfaces.Symbol{Id: "", Tipo: interfaces.BOOLEAN, Valor: retornoIzq.Valor.(bool) || retornoDer.Valor.(bool)}
+
+			} else {
+				fmt.Println("ERROR: No es posible hacer ||")
+			}
+
+		}
+
 	}
 
 	return interfaces.Symbol{Id: "", Tipo: interfaces.INTEGER, Valor: resultado}
