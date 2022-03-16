@@ -39,8 +39,10 @@ instruccion returns [interfaces.Instruction instr]
   | P_IF expression LLAVEIZQ instrucciones LLAVEDER  {$instr = instruction.NewIf($expression.p, $instrucciones.l,false,nil)}
   | P_IF expression LLAVEIZQ i1=instrucciones LLAVEDER P_ELSE LLAVEIZQ i2=instrucciones LLAVEDER {$instr = instruction.NewIf($expression.p, $i1.l,true,$i2.l)}
   | P_WHILE expression LLAVEIZQ instrucciones LLAVEDER  {$instr = instruction.NewWhile($expression.p, $instrucciones.l)}                                                            
-  | P_LOOP LLAVEIZQ instrucciones LLAVEDER  {$instr = instruction.NewLoop($instrucciones.l)}                                                                                                                   
+  | P_LOOP LLAVEIZQ instrucciones LLAVEDER  {$instr = instruction.NewLoop($instrucciones.l)}        
+  | P_FOR id=ID  P_IN f2=expression LLAVEIZQ instrucciones LLAVEDER  {$instr = instruction.NewForin($id.text,$f2.p,$instrucciones.l)}                                                                
 ; 
+
 
 tipo returns[interfaces.TipoExpresion p]
 :P_F64{$p=interfaces.FLOAT}
@@ -78,7 +80,6 @@ expr_arit returns[interfaces.Expresion p]
     | PARIZQ expression PARDER {$p = $expression.p}
    
 ;
-
 
 listValues returns[*arrayList.List l]
     : list=listValues ',' expression { 

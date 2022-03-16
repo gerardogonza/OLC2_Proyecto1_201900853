@@ -24,6 +24,8 @@ P_ABS:           'abs';
 P_SQRT:           'sqrt';
 P_TOSTRING:           'to_string';
 P_CLONE:           'clone';
+P_FOR:              'for';
+P_IN:               'in';
 
 NUMBER: [0-9]+;
 DECIMAL: [0-9]+'.'[0-9]+;

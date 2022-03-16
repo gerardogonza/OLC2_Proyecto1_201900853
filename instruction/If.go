@@ -36,15 +36,15 @@ func (p If) Ejecutar(env interface{}) interface{} {
 
 		}
 
-	}
+	} else {
+		if p.verElse == true {
+			var tmpEnv environment.Environment
+			tmpEnv = environment.NewEnvironment(env.(environment.Environment))
 
-	if p.verElse == true {
-		var tmpEnv environment.Environment
-		tmpEnv = environment.NewEnvironment(env.(environment.Environment))
+			for _, s := range p.BloquEelse.ToArray() {
+				s.(interfaces.Instruction).Ejecutar(tmpEnv)
 
-		for _, s := range p.BloquEelse.ToArray() {
-			s.(interfaces.Instruction).Ejecutar(tmpEnv)
-
+			}
 		}
 	}
 

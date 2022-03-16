@@ -19,7 +19,6 @@ func (p Array) Ejecutar(env interface{}) interfaces.Symbol {
 
 	var tempExp *arrayList.List
 	tempExp = arrayList.New()
-
 	for _, s := range p.ListExp.ToArray() {
 		tempExp.Add(s.(interfaces.Expresion).Ejecutar(env))
 	}

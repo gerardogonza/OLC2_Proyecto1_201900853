@@ -61,14 +61,9 @@ func (p Nativas) Ejecutar(env interface{}) interfaces.Symbol {
 		}
 	case "to_string":
 		{
-			if retornoIzq.Tipo == interfaces.STRING {
-				a := float64(retornoIzq.Valor.(int))
-				res := math.Sqrt(a)
-				return interfaces.Symbol{Id: "", Tipo: interfaces.FLOAT, Valor: res}
 
-			} else {
-				fmt.Println("Error no es valor admitido para valor abs debe ser INT o FLOAT")
-			}
+			return interfaces.Symbol{Id: "", Tipo: interfaces.FLOAT, Valor: fmt.Sprintln(retornoIzq.Valor)}
+
 		}
 	case "clone":
 		{

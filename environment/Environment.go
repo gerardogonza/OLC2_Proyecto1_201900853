@@ -28,7 +28,6 @@ func (env Environment) GetVariable(id string) interfaces.Symbol {
 
 	var tmpEnv Environment
 	tmpEnv = env
-
 	for {
 		if variable, ok := tmpEnv.variable[id]; ok {
 
