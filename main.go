@@ -53,14 +53,14 @@ func Home(w http.ResponseWriter, r *http.Request) {
 	t.Execute(w, libro)
 }
 func Reportes(w http.ResponseWriter, r *http.Request) {
-	libro := instruction.Codigo{Entrada: "Go"}
+
 	t, err := template.ParseFiles("frontend/reportes.html")
 	if err != nil {
 
 		fmt.Println("Hay un error en HTML")
 		fmt.Println(err)
 	}
-	t.Execute(w, libro)
+	t.Execute(w, instruction.CodigoEntrada)
 
 }
 

@@ -2175,7 +2175,19 @@ func (p *Chems) expr_arit(_p int) (localctx IExpr_aritContext) {
 			} else {
 				return localctx.(*Expr_aritContext).GetOp().GetText()
 			}
-		}()), localctx.(*Expr_aritContext).GetOpDe().GetP(), false)
+		}()), localctx.(*Expr_aritContext).GetOpDe().GetP(), false, (func() antlr.Token {
+			if localctx.(*Expr_aritContext).GetOpIz() == nil {
+				return nil
+			} else {
+				return localctx.(*Expr_aritContext).GetOpIz().GetStart()
+			}
+		}()).GetLine(), (func() antlr.Token {
+			if localctx.(*Expr_aritContext).GetOpIz() == nil {
+				return nil
+			} else {
+				return localctx.(*Expr_aritContext).GetOpIz().GetStart()
+			}
+		}()).GetColumn())
 
 	case ChemsDIFERENTE:
 		{
@@ -2198,7 +2210,19 @@ func (p *Chems) expr_arit(_p int) (localctx IExpr_aritContext) {
 			} else {
 				return localctx.(*Expr_aritContext).GetOp().GetText()
 			}
-		}()), localctx.(*Expr_aritContext).GetOpDe().GetP(), false)
+		}()), localctx.(*Expr_aritContext).GetOpDe().GetP(), false, (func() antlr.Token {
+			if localctx.(*Expr_aritContext).GetOpDe() == nil {
+				return nil
+			} else {
+				return localctx.(*Expr_aritContext).GetOpDe().GetStart()
+			}
+		}()).GetLine(), (func() antlr.Token {
+			if localctx.(*Expr_aritContext).GetOpDe() == nil {
+				return nil
+			} else {
+				return localctx.(*Expr_aritContext).GetOpDe().GetStart()
+			}
+		}()).GetColumn())
 
 	case ChemsCORIZQ:
 		{
@@ -2303,7 +2327,19 @@ func (p *Chems) expr_arit(_p int) (localctx IExpr_aritContext) {
 					} else {
 						return localctx.(*Expr_aritContext).GetOp().GetText()
 					}
-				}()), localctx.(*Expr_aritContext).GetOpDe().GetP(), false)
+				}()), localctx.(*Expr_aritContext).GetOpDe().GetP(), false, (func() antlr.Token {
+					if localctx.(*Expr_aritContext).GetOpIz() == nil {
+						return nil
+					} else {
+						return localctx.(*Expr_aritContext).GetOpIz().GetStart()
+					}
+				}()).GetLine(), (func() antlr.Token {
+					if localctx.(*Expr_aritContext).GetOpIz() == nil {
+						return nil
+					} else {
+						return localctx.(*Expr_aritContext).GetOpIz().GetStart()
+					}
+				}()).GetColumn())
 
 			case 2:
 				localctx = NewExpr_aritContext(p, _parentctx, _parentState)
@@ -2345,7 +2381,19 @@ func (p *Chems) expr_arit(_p int) (localctx IExpr_aritContext) {
 					} else {
 						return localctx.(*Expr_aritContext).GetOp().GetText()
 					}
-				}()), localctx.(*Expr_aritContext).GetOpDe().GetP(), false)
+				}()), localctx.(*Expr_aritContext).GetOpDe().GetP(), false, (func() antlr.Token {
+					if localctx.(*Expr_aritContext).GetOpIz() == nil {
+						return nil
+					} else {
+						return localctx.(*Expr_aritContext).GetOpIz().GetStart()
+					}
+				}()).GetLine(), (func() antlr.Token {
+					if localctx.(*Expr_aritContext).GetOpIz() == nil {
+						return nil
+					} else {
+						return localctx.(*Expr_aritContext).GetOpIz().GetStart()
+					}
+				}()).GetColumn())
 
 			case 3:
 				localctx = NewExpr_aritContext(p, _parentctx, _parentState)
@@ -2387,7 +2435,19 @@ func (p *Chems) expr_arit(_p int) (localctx IExpr_aritContext) {
 					} else {
 						return localctx.(*Expr_aritContext).GetOp().GetText()
 					}
-				}()), localctx.(*Expr_aritContext).GetOpDe().GetP(), false)
+				}()), localctx.(*Expr_aritContext).GetOpDe().GetP(), false, (func() antlr.Token {
+					if localctx.(*Expr_aritContext).GetOpIz() == nil {
+						return nil
+					} else {
+						return localctx.(*Expr_aritContext).GetOpIz().GetStart()
+					}
+				}()).GetLine(), (func() antlr.Token {
+					if localctx.(*Expr_aritContext).GetOpIz() == nil {
+						return nil
+					} else {
+						return localctx.(*Expr_aritContext).GetOpIz().GetStart()
+					}
+				}()).GetColumn())
 
 			case 4:
 				localctx = NewExpr_aritContext(p, _parentctx, _parentState)
@@ -2418,7 +2478,19 @@ func (p *Chems) expr_arit(_p int) (localctx IExpr_aritContext) {
 					} else {
 						return localctx.(*Expr_aritContext).GetOp().GetText()
 					}
-				}()), localctx.(*Expr_aritContext).GetOpDe().GetP(), false)
+				}()), localctx.(*Expr_aritContext).GetOpDe().GetP(), false, (func() antlr.Token {
+					if localctx.(*Expr_aritContext).GetOpIz() == nil {
+						return nil
+					} else {
+						return localctx.(*Expr_aritContext).GetOpIz().GetStart()
+					}
+				}()).GetLine(), (func() antlr.Token {
+					if localctx.(*Expr_aritContext).GetOpIz() == nil {
+						return nil
+					} else {
+						return localctx.(*Expr_aritContext).GetOpIz().GetStart()
+					}
+				}()).GetColumn())
 
 			case 5:
 				localctx = NewExpr_aritContext(p, _parentctx, _parentState)
@@ -2460,7 +2532,19 @@ func (p *Chems) expr_arit(_p int) (localctx IExpr_aritContext) {
 					} else {
 						return localctx.(*Expr_aritContext).GetOp().GetText()
 					}
-				}()), localctx.(*Expr_aritContext).GetOpDe().GetP(), false)
+				}()), localctx.(*Expr_aritContext).GetOpDe().GetP(), false, (func() antlr.Token {
+					if localctx.(*Expr_aritContext).GetOpIz() == nil {
+						return nil
+					} else {
+						return localctx.(*Expr_aritContext).GetOpIz().GetStart()
+					}
+				}()).GetLine(), (func() antlr.Token {
+					if localctx.(*Expr_aritContext).GetOpIz() == nil {
+						return nil
+					} else {
+						return localctx.(*Expr_aritContext).GetOpIz().GetStart()
+					}
+				}()).GetColumn())
 
 			case 6:
 				localctx = NewExpr_aritContext(p, _parentctx, _parentState)

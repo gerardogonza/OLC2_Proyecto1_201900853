@@ -30,13 +30,40 @@
       </nav>
     </br>
     <h3><center>Reporte de tabla de símbolos</center></h3>
-    <p>
-        <img src="reportes/ana.png" alt="logotipo" >
-    </p>
+   
+      <p ></p>
+     
+    
     <h3><center> Reporte de errores</center></h3>
-    <p>
-        <img src="reportes/ana.png" alt="logotipo" >
-    </p>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Error</th>
+          <th scope="col">Linea</th>
+          <th scope="col">Columna</th>
+          <th scope="col">Fecha</th>
+        </tr>
+      </thead>
+      <tbody>
+      
+        {{range .Errores}}
+        <tr>
+            <th scope="row">1</th>
+          <td>{{.Error1}}</td>
+          <td>{{.Linea}}</td>
+          <td>{{.Columna}}</td>
+          <td>{{.Fecha}}</td>
+        </tr>
+        {{end}}
+          
+          
+       
+        
+       
+      </tbody>
+    </table>
+    
     <h3><center>Reporte de base de datos existente</center></h3>
     <p>
         <img src="reportes/ana.png" alt="logotipo" >

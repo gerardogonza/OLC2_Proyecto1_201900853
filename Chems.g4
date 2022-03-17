@@ -64,13 +64,13 @@ expression returns[interfaces.Expresion p]
 ;
 
 expr_arit returns[interfaces.Expresion p]
-    : opIz = expr_arit op=('*'|'/') opDe = expr_arit {$p = expresion.NewOperacion($opIz.p,$op.text,$opDe.p,false)}
-    | opIz = expr_arit op=('+'|'-') opDe = expr_arit {$p = expresion.NewOperacion($opIz.p,$op.text,$opDe.p,false)}     
-    | reservada=(P_F64|P_I64) DOSPUNTOS DOSPUNTOS op=(P_POW|P_POWF) PARIZQ opIz = expr_arit COMA opDe = expr_arit PARDER{$p = expresion.NewOperacion($opIz.p,$op.text,$opDe.p,false)}     
-    | opIz = expr_arit op=('<'|'<='|'>='|'>'|MODULO|DIFERENTEDE) opDe = expr_arit {$p = expresion.NewOperacion($opIz.p,$op.text,$opDe.p,false)}   
-    | opIz = expr_arit op=IGUALIGUA opDe = expr_arit  {$p = expresion.NewOperacion($opIz.p,$op.text,$opDe.p,false)}   
-    | opIz = expr_arit op=(OR|AND) opDe = expr_arit  {$p = expresion.NewOperacion($opIz.p,$op.text,$opDe.p,false)}   
-    | op=DIFERENTE  opDe = expr_arit  {$p = expresion.NewOperacion(nil,$op.text,$opDe.p,false)}   
+    : opIz = expr_arit op=('*'|'/') opDe = expr_arit {$p = expresion.NewOperacion($opIz.p,$op.text,$opDe.p,false,$opIz.start.GetLine(),$opIz.start.GetColumn())}
+    | opIz = expr_arit op=('+'|'-') opDe = expr_arit {$p = expresion.NewOperacion($opIz.p,$op.text,$opDe.p,false,$opIz.start.GetLine(),$opIz.start.GetColumn())}     
+    | reservada=(P_F64|P_I64) DOSPUNTOS DOSPUNTOS op=(P_POW|P_POWF) PARIZQ opIz = expr_arit COMA opDe = expr_arit PARDER{$p = expresion.NewOperacion($opIz.p,$op.text,$opDe.p,false,$opIz.start.GetLine(),$opIz.start.GetColumn())}     
+    | opIz = expr_arit op=('<'|'<='|'>='|'>'|MODULO|DIFERENTEDE) opDe = expr_arit {$p = expresion.NewOperacion($opIz.p,$op.text,$opDe.p,false,$opIz.start.GetLine(),$opIz.start.GetColumn())}   
+    | opIz = expr_arit op=IGUALIGUA opDe = expr_arit  {$p = expresion.NewOperacion($opIz.p,$op.text,$opDe.p,false,$opIz.start.GetLine(),$opIz.start.GetColumn())}   
+    | opIz = expr_arit op=(OR|AND) opDe = expr_arit  {$p = expresion.NewOperacion($opIz.p,$op.text,$opDe.p,false,$opIz.start.GetLine(),$opIz.start.GetColumn())}   
+    | op=DIFERENTE  opDe = expr_arit  {$p = expresion.NewOperacion(nil,$op.text,$opDe.p,false,$opDe.start.GetLine(),$opDe.start.GetColumn())}   
     | opIz = expr_arit PUNTO op=P_ABS PARIZQ PARDER {$p = expresion.NewNativas($opIz.p,$op.text)}   
     | opIz = expr_arit PUNTO op=P_SQRT PARIZQ PARDER {$p = expresion.NewNativas($opIz.p,$op.text)}   
     | opIz = expr_arit PUNTO op=P_TOSTRING PARIZQ PARDER {$p = expresion.NewNativas($opIz.p,$op.text)}   

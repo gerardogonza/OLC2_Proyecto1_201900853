@@ -3,7 +3,10 @@ package expresion
 import (
 	"fmt"
 	"math"
+	"proyecto1/instruction"
 	"proyecto1/interfaces"
+
+	"github.com/vigneshuvi/GoDateFormat"
 )
 
 type Aritmetica struct {
@@ -11,10 +14,12 @@ type Aritmetica struct {
 	Operador string
 	Op2      interfaces.Expresion
 	Unario   bool
+	Linea    int
+	Columna  int
 }
 
-func NewOperacion(Op1 interfaces.Expresion, Operador string, Op2 interfaces.Expresion, unario bool) Aritmetica {
-	exp := Aritmetica{Op1, Operador, Op2, unario}
+func NewOperacion(Op1 interfaces.Expresion, Operador string, Op2 interfaces.Expresion, unario bool, Linea int, Columna int) Aritmetica {
+	exp := Aritmetica{Op1, Operador, Op2, unario, Linea, Columna}
 
 	return exp
 }
@@ -90,7 +95,16 @@ func (p Aritmetica) Ejecutar(env interface{}) interfaces.Symbol {
 
 				return interfaces.Symbol{Id: "", Tipo: dominante, Valor: r1 + r2}
 			} else {
-				fmt.Print("ERROR: No es posible sumar")
+				instruction.CodigoEntrada.Salida += "ERROR line" + fmt.Sprint(p.Linea) + ":" + fmt.Sprint(p.Columna) + " No es posible sumar!\n"
+				var errortemporal instruction.Error
+				v := instruction.GetToday(GoDateFormat.ConvertFormat("yyyy-MMM-dd' HH:MM:SS tt"))
+				errortemporal = instruction.Error{
+					Error1:  "  No es posible sumar!!",
+					Linea:   p.Linea,
+					Columna: p.Columna,
+					Fecha:   v,
+				}
+				instruction.CodigoEntrada.Errores = append(instruction.CodigoEntrada.Errores, errortemporal)
 			}
 
 		}
@@ -107,7 +121,16 @@ func (p Aritmetica) Ejecutar(env interface{}) interfaces.Symbol {
 				return interfaces.Symbol{Id: "", Tipo: dominante, Valor: retornoIzq.Valor.(float64) - retornoDer.Valor.(float64)}
 
 			} else {
-				fmt.Print("ERROR: No es posible restar")
+				instruction.CodigoEntrada.Salida += "ERROR line" + fmt.Sprint(p.Linea) + ":" + fmt.Sprint(p.Columna) + " No es posible restar!\n"
+				var errortemporal instruction.Error
+				v := instruction.GetToday(GoDateFormat.ConvertFormat("yyyy-MMM-dd' HH:MM:SS tt"))
+				errortemporal = instruction.Error{
+					Error1:  "  No es posible restar!!",
+					Linea:   p.Linea,
+					Columna: p.Columna,
+					Fecha:   v,
+				}
+				instruction.CodigoEntrada.Errores = append(instruction.CodigoEntrada.Errores, errortemporal)
 			}
 		}
 
@@ -122,7 +145,16 @@ func (p Aritmetica) Ejecutar(env interface{}) interfaces.Symbol {
 				return interfaces.Symbol{Id: "", Tipo: dominante, Valor: retornoIzq.Valor.(float64) * retornoDer.Valor.(float64)}
 
 			} else {
-				fmt.Print("ERROR: No es posible Multiplicar")
+				instruction.CodigoEntrada.Salida += "ERROR line" + fmt.Sprint(p.Linea) + ":" + fmt.Sprint(p.Columna) + " No es posible multiplicar!\n"
+				var errortemporal instruction.Error
+				v := instruction.GetToday(GoDateFormat.ConvertFormat("yyyy-MMM-dd' HH:MM:SS tt"))
+				errortemporal = instruction.Error{
+					Error1:  "  No es posible multiplicar!!",
+					Linea:   p.Linea,
+					Columna: p.Columna,
+					Fecha:   v,
+				}
+				instruction.CodigoEntrada.Errores = append(instruction.CodigoEntrada.Errores, errortemporal)
 			}
 
 		}
@@ -138,7 +170,16 @@ func (p Aritmetica) Ejecutar(env interface{}) interfaces.Symbol {
 				return interfaces.Symbol{Id: "", Tipo: dominante, Valor: retornoIzq.Valor.(float64) / retornoDer.Valor.(float64)}
 
 			} else {
-				fmt.Print("ERROR: No es posible Dividir")
+				instruction.CodigoEntrada.Salida += "ERROR line" + fmt.Sprint(p.Linea) + ":" + fmt.Sprint(p.Columna) + " No es posible Dividir!\n"
+				var errortemporal instruction.Error
+				v := instruction.GetToday(GoDateFormat.ConvertFormat("yyyy-MMM-dd' HH:MM:SS tt"))
+				errortemporal = instruction.Error{
+					Error1:  "  No es posible Dividir!!",
+					Linea:   p.Linea,
+					Columna: p.Columna,
+					Fecha:   v,
+				}
+				instruction.CodigoEntrada.Errores = append(instruction.CodigoEntrada.Errores, errortemporal)
 			}
 
 		}
@@ -155,7 +196,16 @@ func (p Aritmetica) Ejecutar(env interface{}) interfaces.Symbol {
 				return interfaces.Symbol{Id: "", Tipo: interfaces.BOOLEAN, Valor: retornoIzq.Valor.(float64) < retornoDer.Valor.(float64)}
 
 			} else {
-				fmt.Print("ERROR: No es posible comparar <")
+				instruction.CodigoEntrada.Salida += "ERROR line" + fmt.Sprint(p.Linea) + ":" + fmt.Sprint(p.Columna) + " No es posible Comparar <!\n"
+				var errortemporal instruction.Error
+				v := instruction.GetToday(GoDateFormat.ConvertFormat("yyyy-MMM-dd' HH:MM:SS tt"))
+				errortemporal = instruction.Error{
+					Error1:  "   No es posible Comparar <!!",
+					Linea:   p.Linea,
+					Columna: p.Columna,
+					Fecha:   v,
+				}
+				instruction.CodigoEntrada.Errores = append(instruction.CodigoEntrada.Errores, errortemporal)
 			}
 		}
 
@@ -171,7 +221,16 @@ func (p Aritmetica) Ejecutar(env interface{}) interfaces.Symbol {
 				return interfaces.Symbol{Id: "", Tipo: interfaces.BOOLEAN, Valor: retornoIzq.Valor.(float64) > retornoDer.Valor.(float64)}
 
 			} else {
-				fmt.Print("ERROR: No es posible comparar <")
+				instruction.CodigoEntrada.Salida += "ERROR line" + fmt.Sprint(p.Linea) + ":" + fmt.Sprint(p.Columna) + " No es posible Comparar >!\n"
+				var errortemporal instruction.Error
+				v := instruction.GetToday(GoDateFormat.ConvertFormat("yyyy-MMM-dd' HH:MM:SS tt"))
+				errortemporal = instruction.Error{
+					Error1:  "   No es posible Comparar >!!",
+					Linea:   p.Linea,
+					Columna: p.Columna,
+					Fecha:   v,
+				}
+				instruction.CodigoEntrada.Errores = append(instruction.CodigoEntrada.Errores, errortemporal)
 			}
 		}
 
@@ -187,7 +246,16 @@ func (p Aritmetica) Ejecutar(env interface{}) interfaces.Symbol {
 				return interfaces.Symbol{Id: "", Tipo: interfaces.BOOLEAN, Valor: retornoIzq.Valor.(float64) <= retornoDer.Valor.(float64)}
 
 			} else {
-				fmt.Print("ERROR: No es posible comparar <")
+				instruction.CodigoEntrada.Salida += "ERROR line" + fmt.Sprint(p.Linea) + ":" + fmt.Sprint(p.Columna) + " No es posible Comparar <=!\n"
+				var errortemporal instruction.Error
+				v := instruction.GetToday(GoDateFormat.ConvertFormat("yyyy-MMM-dd' HH:MM:SS tt"))
+				errortemporal = instruction.Error{
+					Error1:  "   No es posible Comparar <=!!",
+					Linea:   p.Linea,
+					Columna: p.Columna,
+					Fecha:   v,
+				}
+				instruction.CodigoEntrada.Errores = append(instruction.CodigoEntrada.Errores, errortemporal)
 			}
 		}
 
@@ -203,7 +271,16 @@ func (p Aritmetica) Ejecutar(env interface{}) interfaces.Symbol {
 				return interfaces.Symbol{Id: "", Tipo: interfaces.BOOLEAN, Valor: retornoIzq.Valor.(float64) >= retornoDer.Valor.(float64)}
 
 			} else {
-				fmt.Print("ERROR: No es posible comparar <")
+				instruction.CodigoEntrada.Salida += "ERROR line" + fmt.Sprint(p.Linea) + ":" + fmt.Sprint(p.Columna) + " No es posible Comparar >=!\n"
+				var errortemporal instruction.Error
+				v := instruction.GetToday(GoDateFormat.ConvertFormat("yyyy-MMM-dd' HH:MM:SS tt"))
+				errortemporal = instruction.Error{
+					Error1:  "   No es posible Comparar >=!!",
+					Linea:   p.Linea,
+					Columna: p.Columna,
+					Fecha:   v,
+				}
+				instruction.CodigoEntrada.Errores = append(instruction.CodigoEntrada.Errores, errortemporal)
 			}
 		}
 	case "==":
@@ -224,7 +301,16 @@ func (p Aritmetica) Ejecutar(env interface{}) interfaces.Symbol {
 				return interfaces.Symbol{Id: "", Tipo: interfaces.BOOLEAN, Valor: r1 == r2}
 
 			} else {
-				fmt.Print("ERROR: No es posible comparar ==")
+				instruction.CodigoEntrada.Salida += "ERROR line" + fmt.Sprint(p.Linea) + ":" + fmt.Sprint(p.Columna) + " No es posible Comparar ==!\n"
+				var errortemporal instruction.Error
+				v := instruction.GetToday(GoDateFormat.ConvertFormat("yyyy-MMM-dd' HH:MM:SS tt"))
+				errortemporal = instruction.Error{
+					Error1:  "   No es posible Comparar ==!!",
+					Linea:   p.Linea,
+					Columna: p.Columna,
+					Fecha:   v,
+				}
+				instruction.CodigoEntrada.Errores = append(instruction.CodigoEntrada.Errores, errortemporal)
 			}
 
 		}
@@ -246,7 +332,16 @@ func (p Aritmetica) Ejecutar(env interface{}) interfaces.Symbol {
 				return interfaces.Symbol{Id: "", Tipo: interfaces.BOOLEAN, Valor: r1 != r2}
 
 			} else {
-				fmt.Print("ERROR: No es posible comparar !=")
+				instruction.CodigoEntrada.Salida += "ERROR line" + fmt.Sprint(p.Linea) + ":" + fmt.Sprint(p.Columna) + " No es posible Comparar != !\n"
+				var errortemporal instruction.Error
+				v := instruction.GetToday(GoDateFormat.ConvertFormat("yyyy-MMM-dd' HH:MM:SS tt"))
+				errortemporal = instruction.Error{
+					Error1:  "   No es posible Comparar != !!",
+					Linea:   p.Linea,
+					Columna: p.Columna,
+					Fecha:   v,
+				}
+				instruction.CodigoEntrada.Errores = append(instruction.CodigoEntrada.Errores, errortemporal)
 			}
 		}
 	case "pow":
@@ -260,7 +355,16 @@ func (p Aritmetica) Ejecutar(env interface{}) interfaces.Symbol {
 				return interfaces.Symbol{Id: "", Tipo: interfaces.BOOLEAN, Valor: math.Pow(b, c)}
 
 			} else {
-				fmt.Print("ERROR: No es posible hacer potencia valores no son del mismo tipo ")
+				instruction.CodigoEntrada.Salida += "ERROR line" + fmt.Sprint(p.Linea) + ":" + fmt.Sprint(p.Columna) + " No son del mismo tipo pow!\n"
+				var errortemporal instruction.Error
+				v := instruction.GetToday(GoDateFormat.ConvertFormat("yyyy-MMM-dd' HH:MM:SS tt"))
+				errortemporal = instruction.Error{
+					Error1:  " No son del mismo tipo pow!!",
+					Linea:   p.Linea,
+					Columna: p.Columna,
+					Fecha:   v,
+				}
+				instruction.CodigoEntrada.Errores = append(instruction.CodigoEntrada.Errores, errortemporal)
 			}
 		}
 
@@ -273,7 +377,16 @@ func (p Aritmetica) Ejecutar(env interface{}) interfaces.Symbol {
 				return interfaces.Symbol{Id: "", Tipo: interfaces.BOOLEAN, Valor: math.Pow(retornoIzq.Valor.(float64), retornoDer.Valor.(float64))}
 
 			} else {
-				fmt.Print("ERROR: No es posible hacer potencia valores no son del mismo tipo ")
+				instruction.CodigoEntrada.Salida += "ERROR line" + fmt.Sprint(p.Linea) + ":" + fmt.Sprint(p.Columna) + " No son del mismo tipo powf!\n"
+				var errortemporal instruction.Error
+				v := instruction.GetToday(GoDateFormat.ConvertFormat("yyyy-MMM-dd' HH:MM:SS tt"))
+				errortemporal = instruction.Error{
+					Error1:  " No son del mismo tipo powf!!",
+					Linea:   p.Linea,
+					Columna: p.Columna,
+					Fecha:   v,
+				}
+				instruction.CodigoEntrada.Errores = append(instruction.CodigoEntrada.Errores, errortemporal)
 			}
 		}
 	case "%":
@@ -288,7 +401,16 @@ func (p Aritmetica) Ejecutar(env interface{}) interfaces.Symbol {
 				return interfaces.Symbol{Id: "", Tipo: interfaces.FLOAT, Valor: math.Mod(retornoIzq.Valor.(float64), retornoDer.Valor.(float64))}
 
 			} else {
-				fmt.Print("ERROR: No es posible hacer mod")
+				instruction.CodigoEntrada.Salida += "ERROR line" + fmt.Sprint(p.Linea) + ":" + fmt.Sprint(p.Columna) + " No se puede hacer mod!\n"
+				var errortemporal instruction.Error
+				v := instruction.GetToday(GoDateFormat.ConvertFormat("yyyy-MMM-dd' HH:MM:SS tt"))
+				errortemporal = instruction.Error{
+					Error1:  "No se puede hacer mod!!",
+					Linea:   p.Linea,
+					Columna: p.Columna,
+					Fecha:   v,
+				}
+				instruction.CodigoEntrada.Errores = append(instruction.CodigoEntrada.Errores, errortemporal)
 			}
 		}
 	case "!":
@@ -301,7 +423,16 @@ func (p Aritmetica) Ejecutar(env interface{}) interfaces.Symbol {
 			} else if retornoDer.Tipo == interfaces.TRUE {
 				return interfaces.Symbol{Id: "", Tipo: interfaces.BOOLEAN, Valor: false}
 			} else {
-				fmt.Print("ERROR: No es posible hacer: not ")
+				instruction.CodigoEntrada.Salida += "ERROR line" + fmt.Sprint(p.Linea) + ":" + fmt.Sprint(p.Columna) + " No se puede hacer not !\n"
+				var errortemporal instruction.Error
+				v := instruction.GetToday(GoDateFormat.ConvertFormat("yyyy-MMM-dd' HH:MM:SS tt"))
+				errortemporal = instruction.Error{
+					Error1:  "No se puede hacer not !!",
+					Linea:   p.Linea,
+					Columna: p.Columna,
+					Fecha:   v,
+				}
+				instruction.CodigoEntrada.Errores = append(instruction.CodigoEntrada.Errores, errortemporal)
 			}
 
 		}
@@ -313,7 +444,16 @@ func (p Aritmetica) Ejecutar(env interface{}) interfaces.Symbol {
 				return interfaces.Symbol{Id: "", Tipo: interfaces.BOOLEAN, Valor: retornoIzq.Valor.(bool) && retornoDer.Valor.(bool)}
 
 			} else {
-				fmt.Println("ERROR: No es posible hacer &&")
+				instruction.CodigoEntrada.Salida += "ERROR line" + fmt.Sprint(p.Linea) + ":" + fmt.Sprint(p.Columna) + " No se puede hacer && !\n"
+				var errortemporal instruction.Error
+				v := instruction.GetToday(GoDateFormat.ConvertFormat("yyyy-MMM-dd' HH:MM:SS tt"))
+				errortemporal = instruction.Error{
+					Error1:  "No se puede hacer && !!",
+					Linea:   p.Linea,
+					Columna: p.Columna,
+					Fecha:   v,
+				}
+				instruction.CodigoEntrada.Errores = append(instruction.CodigoEntrada.Errores, errortemporal)
 			}
 
 		}
@@ -327,7 +467,16 @@ func (p Aritmetica) Ejecutar(env interface{}) interfaces.Symbol {
 
 				return interfaces.Symbol{Id: "", Tipo: interfaces.BOOLEAN, Valor: false}
 			} else {
-				fmt.Println("ERROR: No es posible hacer ||")
+				instruction.CodigoEntrada.Salida += "ERROR line" + fmt.Sprint(p.Linea) + ":" + fmt.Sprint(p.Columna) + " No se puede hacer OR !\n"
+				var errortemporal instruction.Error
+				v := instruction.GetToday(GoDateFormat.ConvertFormat("yyyy-MMM-dd' HH:MM:SS tt"))
+				errortemporal = instruction.Error{
+					Error1:  "No se puede hacer OR !!",
+					Linea:   p.Linea,
+					Columna: p.Columna,
+					Fecha:   v,
+				}
+				instruction.CodigoEntrada.Errores = append(instruction.CodigoEntrada.Errores, errortemporal)
 
 			}
 

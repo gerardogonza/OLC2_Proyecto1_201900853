@@ -3,6 +3,8 @@ package instruction
 import (
 	"proyecto1/environment"
 	"proyecto1/interfaces"
+
+	"github.com/vigneshuvi/GoDateFormat"
 )
 
 type Declaration struct {
@@ -46,7 +48,15 @@ func (p Declaration) Ejecutar(env interface{}) interface{} {
 		}
 	} else {
 		CodigoEntrada.Salida += "ERROR: El tipo de la Variable \"" + p.Id + "\" es diferente al valor Declarado! \n"
-
+		var errortemporal Error
+		v := GetToday(GoDateFormat.ConvertFormat("yyyy-MMM-dd' HH:MM:SS tt"))
+		errortemporal = Error{
+			Error1:  " El tipo de la Variable \"" + p.Id + "\" es diferente al valor Declarado!",
+			Linea:   14,
+			Columna: 12,
+			Fecha:   v,
+		}
+		CodigoEntrada.Errores = append(CodigoEntrada.Errores, errortemporal)
 	}
 
 	return result.Valor
