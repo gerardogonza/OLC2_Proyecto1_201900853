@@ -1,6 +1,7 @@
 package instruction
 
 import (
+	"fmt"
 	"proyecto1/environment"
 	"proyecto1/interfaces"
 
@@ -13,10 +14,12 @@ type Declaration struct {
 	Expresion interfaces.Expresion
 	IsArray   bool
 	Muteable  bool
+	Linea     int
+	Columna   int
 }
 
-func NewDeclaration(id string, tipo interfaces.TipoExpresion, val interfaces.Expresion, isArray bool, isMuteable bool) Declaration {
-	instr := Declaration{id, tipo, val, isArray, isMuteable}
+func NewDeclaration(id string, tipo interfaces.TipoExpresion, val interfaces.Expresion, isArray bool, isMuteable bool, Linea int, Columna int) Declaration {
+	instr := Declaration{id, tipo, val, isArray, isMuteable, Linea, Columna}
 	return instr
 }
 
@@ -47,13 +50,13 @@ func (p Declaration) Ejecutar(env interface{}) interface{} {
 			env.(environment.Environment).SaveVariable(p.Id, result, interfaces.FALSE, p.Muteable)
 		}
 	} else {
-		CodigoEntrada.Salida += "ERROR: El tipo de la Variable \"" + p.Id + "\" es diferente al valor Declarado! \n"
+		CodigoEntrada.Salida += "ERROR line" + fmt.Sprint(p.Linea) + ":" + fmt.Sprint(p.Columna) + "\" " + p.Id + "\" es diferente al valor Declarado! \n"
 		var errortemporal Error
 		v := GetToday(GoDateFormat.ConvertFormat("yyyy-MMM-dd' HH:MM:SS tt"))
 		errortemporal = Error{
 			Error1:  " El tipo de la Variable \"" + p.Id + "\" es diferente al valor Declarado!",
-			Linea:   14,
-			Columna: 12,
+			Linea:   p.Linea,
+			Columna: p.Columna,
 			Fecha:   v,
 		}
 		CodigoEntrada.Errores = append(CodigoEntrada.Errores, errortemporal)

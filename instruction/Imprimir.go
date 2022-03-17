@@ -28,18 +28,22 @@ var CodigoEntrada Codigo
 
 type Imprimir struct {
 	Expresion interfaces.Expresion
+	Tipo      bool
 }
 
-func NewImprimir(val interfaces.Expresion) Imprimir {
-	exp := Imprimir{val}
+func NewImprimir(val interfaces.Expresion, tipo bool) Imprimir {
+	exp := Imprimir{val, tipo}
 	return exp
 }
 
 func (p Imprimir) Ejecutar(env interface{}) interface{} {
-
 	var result interfaces.Symbol
-
 	result = p.Expresion.Ejecutar(env)
-	CodigoEntrada.Salida += fmt.Sprintln(result.Valor)
+	if p.Tipo == false {
+		CodigoEntrada.Salida += fmt.Sprintln(result.Valor)
+	} else {
+		CodigoEntrada.Salida += fmt.Sprint(result.Valor)
+	}
+
 	return result.Valor
 }

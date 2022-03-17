@@ -4,6 +4,7 @@ lexer grammar ChemsLexer;
 // Tokens
 
 PRINTLN:  'println';
+PRINT:  'print';
 P_NUMBER:   'number';
 P_STRING:   'string';
 P_IF:       'if';

@@ -3,16 +3,21 @@ package expresion
 import (
 	"fmt"
 	"math"
+	"proyecto1/instruction"
 	"proyecto1/interfaces"
+
+	"github.com/vigneshuvi/GoDateFormat"
 )
 
 type Nativas struct {
 	Op1      interfaces.Expresion
 	Operador string
+	Linea    int
+	Columna  int
 }
 
-func NewNativas(Op1 interfaces.Expresion, Operador string) Nativas {
-	exp := Nativas{Op1, Operador}
+func NewNativas(Op1 interfaces.Expresion, Operador string, Linea int, Columna int) Nativas {
+	exp := Nativas{Op1, Operador, Linea, Columna}
 
 	return exp
 }
@@ -40,7 +45,16 @@ func (p Nativas) Ejecutar(env interface{}) interfaces.Symbol {
 					return interfaces.Symbol{Id: "", Tipo: interfaces.FLOAT, Valor: (retornoIzq.Valor.(float64))}
 				}
 			} else {
-				fmt.Println("Error no es valor admitido para valor abs debe ser INT o FLOAT")
+				instruction.CodigoEntrada.Salida += "ERROR line" + fmt.Sprint(p.Linea) + ":" + fmt.Sprint(p.Columna) + " no es valor admitido para valor abs debe ser INT o FLOAT !\n"
+				var errortemporal instruction.Error
+				v := instruction.GetToday(GoDateFormat.ConvertFormat("yyyy-MMM-dd' HH:MM:SS tt"))
+				errortemporal = instruction.Error{
+					Error1:  "no es valor admitido para valor \"abs\" debe ser INT o FLOAT",
+					Linea:   p.Linea,
+					Columna: p.Columna,
+					Fecha:   v,
+				}
+				instruction.CodigoEntrada.Errores = append(instruction.CodigoEntrada.Errores, errortemporal)
 			}
 		}
 	case "sqrt":
@@ -56,7 +70,16 @@ func (p Nativas) Ejecutar(env interface{}) interfaces.Symbol {
 				return interfaces.Symbol{Id: "", Tipo: interfaces.FLOAT, Valor: res}
 
 			} else {
-				fmt.Println("Error no es valor admitido para valor abs debe ser INT o FLOAT")
+				instruction.CodigoEntrada.Salida += "ERROR line" + fmt.Sprint(p.Linea) + ":" + fmt.Sprint(p.Columna) + " no es valor admitido para valor \"sqrt\" debe ser INT o FLOAT !\n"
+				var errortemporal instruction.Error
+				v := instruction.GetToday(GoDateFormat.ConvertFormat("yyyy-MMM-dd' HH:MM:SS tt"))
+				errortemporal = instruction.Error{
+					Error1:  "no es valor admitido para valor \"sqrt\" debe ser INT o FLOAT !!",
+					Linea:   p.Linea,
+					Columna: p.Columna,
+					Fecha:   v,
+				}
+				instruction.CodigoEntrada.Errores = append(instruction.CodigoEntrada.Errores, errortemporal)
 			}
 		}
 	case "to_string":
