@@ -30,8 +30,8 @@ func (p While) Ejecutar(env interface{}) interface{} {
 			tmpEnv = environment.NewEnvironment(env.(environment.Environment))
 
 			for _, s := range p.Bloque.ToArray() {
-
 				s.(interfaces.Instruction).Ejecutar(tmpEnv)
+				break
 			}
 
 		} else {

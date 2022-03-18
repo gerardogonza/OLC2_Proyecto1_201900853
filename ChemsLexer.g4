@@ -27,6 +27,7 @@ P_TOSTRING:           'to_string';
 P_CLONE:           'clone';
 P_FOR:              'for';
 P_IN:               'in';
+P_BREAK:               'break';
 
 NUMBER: [0-9]+;
 DECIMAL: [0-9]+'.'[0-9]+;

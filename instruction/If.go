@@ -8,13 +8,13 @@ import (
 )
 
 type If struct {
-	Expresion  interfaces.Expresion
-	Bloque     *arrayList.List
-	verElse    bool
-	BloquEelse *arrayList.List
+	Expresion    interfaces.Expresion
+	Bloque       *arrayList.List
+	BloqueElseIF *arrayList.List
+	BloquEelse   *arrayList.List
 }
 
-func NewIf(condition interfaces.Expresion, bloque *arrayList.List, validarElse bool, bloqueElse *arrayList.List) If {
+func NewIf(condition interfaces.Expresion, bloque *arrayList.List, validarElse *arrayList.List, bloqueElse *arrayList.List) If {
 
 	ifInstr := If{condition, bloque, validarElse, bloqueElse}
 	return ifInstr
@@ -37,7 +37,18 @@ func (p If) Ejecutar(env interface{}) interface{} {
 		}
 
 	} else {
-		if p.verElse == true {
+		if p.BloqueElseIF != nil {
+			var tmpEnv environment.Environment
+			tmpEnv = environment.NewEnvironment(env.(environment.Environment))
+
+			for _, s := range p.BloqueElseIF.ToArray() {
+				s.(interfaces.Instruction).Ejecutar(tmpEnv)
+
+			}
+			return result.Valor
+		}
+
+		if p.BloquEelse != nil {
 			var tmpEnv environment.Environment
 			tmpEnv = environment.NewEnvironment(env.(environment.Environment))
 

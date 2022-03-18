@@ -37,13 +37,26 @@ instruccion returns [interfaces.Instruction instr]
   | P_LET muteable=mut isArray=array_st id=ID DOSPUNTOS isTipo=tipo IGUAL expression ';'{$instr = instruction.NewDeclaration($id.text,$isTipo.p,$expression.p, $isArray.arr,$muteable.arr,$expression.start.GetLine(),$expression.start.GetColumn())	}
   | P_LET muteable=mut isArray=array_st id=ID IGUAL expression ';'{$instr = instruction.NewDeclaration($id.text,interfaces.NULL,$expression.p, $isArray.arr,$muteable.arr,$expression.start.GetLine(),$expression.start.GetColumn())	}
   | id=ID '=' expression ';'{$instr = instruction.NewAssignment($id.text,$expression.p)}
-  | P_IF expression LLAVEIZQ instrucciones LLAVEDER  {$instr = instruction.NewIf($expression.p, $instrucciones.l,false,nil)}
-  | P_IF expression LLAVEIZQ i1=instrucciones LLAVEDER P_ELSE LLAVEIZQ i2=instrucciones LLAVEDER {$instr = instruction.NewIf($expression.p, $i1.l,true,$i2.l)}
+  | P_IF expression LLAVEIZQ instrucciones LLAVEDER  {$instr = instruction.NewIf($expression.p, $instrucciones.l,nil,nil)}
+  | P_IF expression LLAVEIZQ i1=instrucciones LLAVEDER P_ELSE LLAVEIZQ i2=instrucciones LLAVEDER {$instr = instruction.NewIf($expression.p, $i1.l,nil,$i2.l)}
+  | P_IF expression LLAVEIZQ i1=instrucciones LLAVEDER d2=listaelseif  P_ELSE LLAVEIZQ i2=instrucciones LLAVEDER {$instr = instruction.NewIf($expression.p, $i1.l,$d2.lista,$i2.l)}
   | P_WHILE expression LLAVEIZQ instrucciones LLAVEDER  {$instr = instruction.NewWhile($expression.p, $instrucciones.l)}                                                            
   | P_LOOP LLAVEIZQ instrucciones LLAVEDER  {$instr = instruction.NewLoop($instrucciones.l)}        
   | P_FOR id=ID  P_IN f2=expression LLAVEIZQ instrucciones LLAVEDER  {$instr = instruction.NewForin($id.text,$f2.p,$instrucciones.l)}                                                                
+  | P_BREAK  ';' {$instr = instruction.NewBreak(interfaces.BREAK,$P_BREAK.line,$P_BREAK.pos)}                                                   
 ; 
-
+listaelseif returns [*arrayList.List lista]
+@init{ $lista = arrayList.New()}
+:  list +=else_if*  {
+      listInt := localctx.(*ListaelseifContext).GetList()
+                                                                            for _, e := range listInt {
+                                                                                $lista.Add(e.GetInstr())
+                                                                            }
+    }
+;
+else_if returns [interfaces.Instruction instr]
+    : P_ELSE P_IF expression LLAVEIZQ instrucciones LLAVEDER  {$instr = instruction.NewIf($expression.p, $instrucciones.l,nil,nil)}
+;
 
 tipo returns[interfaces.TipoExpresion p]
 :P_F64{$p=interfaces.FLOAT}

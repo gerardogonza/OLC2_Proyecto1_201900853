@@ -17,6 +17,12 @@ type ChemsListener interface {
 	// EnterInstruccion is called when entering the instruccion production.
 	EnterInstruccion(c *InstruccionContext)
 
+	// EnterListaelseif is called when entering the listaelseif production.
+	EnterListaelseif(c *ListaelseifContext)
+
+	// EnterElse_if is called when entering the else_if production.
+	EnterElse_if(c *Else_ifContext)
+
 	// EnterTipo is called when entering the tipo production.
 	EnterTipo(c *TipoContext)
 
@@ -49,6 +55,12 @@ type ChemsListener interface {
 
 	// ExitInstruccion is called when exiting the instruccion production.
 	ExitInstruccion(c *InstruccionContext)
+
+	// ExitListaelseif is called when exiting the listaelseif production.
+	ExitListaelseif(c *ListaelseifContext)
+
+	// ExitElse_if is called when exiting the else_if production.
+	ExitElse_if(c *Else_ifContext)
 
 	// ExitTipo is called when exiting the tipo production.
 	ExitTipo(c *TipoContext)

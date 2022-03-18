@@ -26,19 +26,20 @@ public class Chems extends Parser {
 		PRINTLN=1, PRINT=2, P_NUMBER=3, P_STRING=4, P_IF=5, P_ELSE=6, P_WHILE=7, 
 		P_POW=8, P_POWF=9, P_I64=10, P_F64=11, P_LET=12, P_MUT=13, P_AS=14, P_TRUE=15, 
 		P_FALSE=16, P_MATCH=17, P_LOOP=18, P_ABS=19, P_SQRT=20, P_TOSTRING=21, 
-		P_CLONE=22, P_FOR=23, P_IN=24, NUMBER=25, DECIMAL=26, STRING=27, ID=28, 
-		PUNTO=29, PTCOMA=30, COMA=31, DOSPUNTOS=32, DIFERENTE=33, DIFERENTEDE=34, 
-		IGUAL=35, IGUALIGUA=36, MAYORIGUAL=37, MENORIGUAL=38, MAYOR=39, MENOR=40, 
-		MUL=41, DIV=42, MODULO=43, ADD=44, SUB=45, PARIZQ=46, PARDER=47, LLAVEIZQ=48, 
-		LLAVEDER=49, CORIZQ=50, CORDER=51, OR=52, AND=53, MULTICOMENT=54, WHITESPACE=55;
+		P_CLONE=22, P_FOR=23, P_IN=24, P_BREAK=25, NUMBER=26, DECIMAL=27, STRING=28, 
+		ID=29, PUNTO=30, PTCOMA=31, COMA=32, DOSPUNTOS=33, DIFERENTE=34, DIFERENTEDE=35, 
+		IGUAL=36, IGUALIGUA=37, MAYORIGUAL=38, MENORIGUAL=39, MAYOR=40, MENOR=41, 
+		MUL=42, DIV=43, MODULO=44, ADD=45, SUB=46, PARIZQ=47, PARDER=48, LLAVEIZQ=49, 
+		LLAVEDER=50, CORIZQ=51, CORDER=52, OR=53, AND=54, MULTICOMENT=55, WHITESPACE=56;
 	public static final int
-		RULE_start = 0, RULE_instrucciones = 1, RULE_instruccion = 2, RULE_tipo = 3, 
-		RULE_mut = 4, RULE_array_st = 5, RULE_expression = 6, RULE_expr_arit = 7, 
-		RULE_listValues = 8, RULE_primitivo = 9, RULE_listArray = 10;
+		RULE_start = 0, RULE_instrucciones = 1, RULE_instruccion = 2, RULE_listaelseif = 3, 
+		RULE_else_if = 4, RULE_tipo = 5, RULE_mut = 6, RULE_array_st = 7, RULE_expression = 8, 
+		RULE_expr_arit = 9, RULE_listValues = 10, RULE_primitivo = 11, RULE_listArray = 12;
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"start", "instrucciones", "instruccion", "tipo", "mut", "array_st", "expression", 
-			"expr_arit", "listValues", "primitivo", "listArray"
+			"start", "instrucciones", "instruccion", "listaelseif", "else_if", "tipo", 
+			"mut", "array_st", "expression", "expr_arit", "listValues", "primitivo", 
+			"listArray"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
@@ -48,10 +49,10 @@ public class Chems extends Parser {
 			null, "'println'", "'print'", "'number'", "'string'", "'if'", "'else'", 
 			"'while'", "'pow'", "'powf'", "'i64'", "'f64'", "'let'", "'mut'", "'as'", 
 			"'true'", "'false'", "'match'", "'loop'", "'abs'", "'sqrt'", "'to_string'", 
-			"'clone'", "'for'", "'in'", null, null, null, null, "'.'", "';'", "','", 
-			"':'", "'!'", "'!='", "'='", "'=='", "'>='", "'<='", "'>'", "'<'", "'*'", 
-			"'/'", "'%'", "'+'", "'-'", "'('", "')'", "'{'", "'}'", "'['", "']'", 
-			"'||'", "'&&'"
+			"'clone'", "'for'", "'in'", "'break'", null, null, null, null, "'.'", 
+			"';'", "','", "':'", "'!'", "'!='", "'='", "'=='", "'>='", "'<='", "'>'", 
+			"'<'", "'*'", "'/'", "'%'", "'+'", "'-'", "'('", "')'", "'{'", "'}'", 
+			"'['", "']'", "'||'", "'&&'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
@@ -60,8 +61,8 @@ public class Chems extends Parser {
 			null, "PRINTLN", "PRINT", "P_NUMBER", "P_STRING", "P_IF", "P_ELSE", "P_WHILE", 
 			"P_POW", "P_POWF", "P_I64", "P_F64", "P_LET", "P_MUT", "P_AS", "P_TRUE", 
 			"P_FALSE", "P_MATCH", "P_LOOP", "P_ABS", "P_SQRT", "P_TOSTRING", "P_CLONE", 
-			"P_FOR", "P_IN", "NUMBER", "DECIMAL", "STRING", "ID", "PUNTO", "PTCOMA", 
-			"COMA", "DOSPUNTOS", "DIFERENTE", "DIFERENTEDE", "IGUAL", "IGUALIGUA", 
+			"P_FOR", "P_IN", "P_BREAK", "NUMBER", "DECIMAL", "STRING", "ID", "PUNTO", 
+			"PTCOMA", "COMA", "DOSPUNTOS", "DIFERENTE", "DIFERENTEDE", "IGUAL", "IGUALIGUA", 
 			"MAYORIGUAL", "MENORIGUAL", "MAYOR", "MENOR", "MUL", "DIV", "MODULO", 
 			"ADD", "SUB", "PARIZQ", "PARDER", "LLAVEIZQ", "LLAVEDER", "CORIZQ", "CORDER", 
 			"OR", "AND", "MULTICOMENT", "WHITESPACE"
@@ -136,7 +137,7 @@ public class Chems extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(22);
+			setState(26);
 			((StartContext)_localctx).instrucciones = instrucciones();
 			_localctx.lista = ((StartContext)_localctx).instrucciones.l
 			}
@@ -178,18 +179,18 @@ public class Chems extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(28);
+			setState(32);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << PRINTLN) | (1L << PRINT) | (1L << P_IF) | (1L << P_WHILE) | (1L << P_LET) | (1L << P_LOOP) | (1L << P_FOR) | (1L << ID))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << PRINTLN) | (1L << PRINT) | (1L << P_IF) | (1L << P_WHILE) | (1L << P_LET) | (1L << P_LOOP) | (1L << P_FOR) | (1L << P_BREAK) | (1L << ID))) != 0)) {
 				{
 				{
-				setState(25);
+				setState(29);
 				((InstruccionesContext)_localctx).instruccion = instruccion();
 				((InstruccionesContext)_localctx).e.add(((InstruccionesContext)_localctx).instruccion);
 				}
 				}
-				setState(30);
+				setState(34);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -222,7 +223,9 @@ public class Chems extends Parser {
 		public InstruccionesContext instrucciones;
 		public InstruccionesContext i1;
 		public InstruccionesContext i2;
+		public ListaelseifContext d2;
 		public ExpressionContext f2;
+		public Token P_BREAK;
 		public TerminalNode PRINTLN() { return getToken(Chems.PRINTLN, 0); }
 		public TerminalNode DIFERENTE() { return getToken(Chems.DIFERENTE, 0); }
 		public TerminalNode PARIZQ() { return getToken(Chems.PARIZQ, 0); }
@@ -261,10 +264,14 @@ public class Chems extends Parser {
 			return getToken(Chems.LLAVEDER, i);
 		}
 		public TerminalNode P_ELSE() { return getToken(Chems.P_ELSE, 0); }
+		public ListaelseifContext listaelseif() {
+			return getRuleContext(ListaelseifContext.class,0);
+		}
 		public TerminalNode P_WHILE() { return getToken(Chems.P_WHILE, 0); }
 		public TerminalNode P_LOOP() { return getToken(Chems.P_LOOP, 0); }
 		public TerminalNode P_FOR() { return getToken(Chems.P_FOR, 0); }
 		public TerminalNode P_IN() { return getToken(Chems.P_IN, 0); }
+		public TerminalNode P_BREAK() { return getToken(Chems.P_BREAK, 0); }
 		public InstruccionContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -275,23 +282,23 @@ public class Chems extends Parser {
 		InstruccionContext _localctx = new InstruccionContext(_ctx, getState());
 		enterRule(_localctx, 4, RULE_instruccion);
 		try {
-			setState(115);
+			setState(134);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(33);
-				match(PRINTLN);
-				setState(34);
-				match(DIFERENTE);
-				setState(35);
-				match(PARIZQ);
-				setState(36);
-				((InstruccionContext)_localctx).expression = expression();
 				setState(37);
-				match(PARDER);
+				match(PRINTLN);
 				setState(38);
+				match(DIFERENTE);
+				setState(39);
+				match(PARIZQ);
+				setState(40);
+				((InstruccionContext)_localctx).expression = expression();
+				setState(41);
+				match(PARDER);
+				setState(42);
 				match(PTCOMA);
 				_localctx.instr = instruction.NewImprimir(((InstruccionContext)_localctx).expression.p,false)
 				}
@@ -299,17 +306,17 @@ public class Chems extends Parser {
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(41);
-				match(PRINT);
-				setState(42);
-				match(DIFERENTE);
-				setState(43);
-				match(PARIZQ);
-				setState(44);
-				((InstruccionContext)_localctx).expression = expression();
 				setState(45);
-				match(PARDER);
+				match(PRINT);
 				setState(46);
+				match(DIFERENTE);
+				setState(47);
+				match(PARIZQ);
+				setState(48);
+				((InstruccionContext)_localctx).expression = expression();
+				setState(49);
+				match(PARDER);
+				setState(50);
 				match(PTCOMA);
 				_localctx.instr = instruction.NewImprimir(((InstruccionContext)_localctx).expression.p,true)
 				}
@@ -317,23 +324,23 @@ public class Chems extends Parser {
 			case 3:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(49);
-				match(P_LET);
-				setState(50);
-				((InstruccionContext)_localctx).muteable = mut();
-				setState(51);
-				((InstruccionContext)_localctx).isArray = array_st();
-				setState(52);
-				((InstruccionContext)_localctx).id = match(ID);
 				setState(53);
-				match(DOSPUNTOS);
+				match(P_LET);
 				setState(54);
-				((InstruccionContext)_localctx).isTipo = tipo();
+				((InstruccionContext)_localctx).muteable = mut();
 				setState(55);
-				match(IGUAL);
+				((InstruccionContext)_localctx).isArray = array_st();
 				setState(56);
-				((InstruccionContext)_localctx).expression = expression();
+				((InstruccionContext)_localctx).id = match(ID);
 				setState(57);
+				match(DOSPUNTOS);
+				setState(58);
+				((InstruccionContext)_localctx).isTipo = tipo();
+				setState(59);
+				match(IGUAL);
+				setState(60);
+				((InstruccionContext)_localctx).expression = expression();
+				setState(61);
 				match(PTCOMA);
 				_localctx.instr = instruction.NewDeclaration((((InstruccionContext)_localctx).id!=null?((InstruccionContext)_localctx).id.getText():null),((InstruccionContext)_localctx).isTipo.p,((InstruccionContext)_localctx).expression.p, ((InstruccionContext)_localctx).isArray.arr,((InstruccionContext)_localctx).muteable.arr,(((InstruccionContext)_localctx).expression!=null?(((InstruccionContext)_localctx).expression.start):null).GetLine(),(((InstruccionContext)_localctx).expression!=null?(((InstruccionContext)_localctx).expression.start):null).GetColumn())	
 				}
@@ -341,19 +348,19 @@ public class Chems extends Parser {
 			case 4:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(60);
-				match(P_LET);
-				setState(61);
-				((InstruccionContext)_localctx).muteable = mut();
-				setState(62);
-				((InstruccionContext)_localctx).isArray = array_st();
-				setState(63);
-				((InstruccionContext)_localctx).id = match(ID);
 				setState(64);
-				match(IGUAL);
+				match(P_LET);
 				setState(65);
-				((InstruccionContext)_localctx).expression = expression();
+				((InstruccionContext)_localctx).muteable = mut();
 				setState(66);
+				((InstruccionContext)_localctx).isArray = array_st();
+				setState(67);
+				((InstruccionContext)_localctx).id = match(ID);
+				setState(68);
+				match(IGUAL);
+				setState(69);
+				((InstruccionContext)_localctx).expression = expression();
+				setState(70);
 				match(PTCOMA);
 				_localctx.instr = instruction.NewDeclaration((((InstruccionContext)_localctx).id!=null?((InstruccionContext)_localctx).id.getText():null),interfaces.NULL,((InstruccionContext)_localctx).expression.p, ((InstruccionContext)_localctx).isArray.arr,((InstruccionContext)_localctx).muteable.arr,(((InstruccionContext)_localctx).expression!=null?(((InstruccionContext)_localctx).expression.start):null).GetLine(),(((InstruccionContext)_localctx).expression!=null?(((InstruccionContext)_localctx).expression.start):null).GetColumn())	
 				}
@@ -361,13 +368,13 @@ public class Chems extends Parser {
 			case 5:
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(69);
+				setState(73);
 				((InstruccionContext)_localctx).id = match(ID);
-				setState(70);
+				setState(74);
 				match(IGUAL);
-				setState(71);
+				setState(75);
 				((InstruccionContext)_localctx).expression = expression();
-				setState(72);
+				setState(76);
 				match(PTCOMA);
 				_localctx.instr = instruction.NewAssignment((((InstruccionContext)_localctx).id!=null?((InstruccionContext)_localctx).id.getText():null),((InstruccionContext)_localctx).expression.p)
 				}
@@ -375,93 +382,241 @@ public class Chems extends Parser {
 			case 6:
 				enterOuterAlt(_localctx, 6);
 				{
-				setState(75);
-				match(P_IF);
-				setState(76);
-				((InstruccionContext)_localctx).expression = expression();
-				setState(77);
-				match(LLAVEIZQ);
-				setState(78);
-				((InstruccionContext)_localctx).instrucciones = instrucciones();
 				setState(79);
+				match(P_IF);
+				setState(80);
+				((InstruccionContext)_localctx).expression = expression();
+				setState(81);
+				match(LLAVEIZQ);
+				setState(82);
+				((InstruccionContext)_localctx).instrucciones = instrucciones();
+				setState(83);
 				match(LLAVEDER);
-				_localctx.instr = instruction.NewIf(((InstruccionContext)_localctx).expression.p, ((InstruccionContext)_localctx).instrucciones.l,false,nil)
+				_localctx.instr = instruction.NewIf(((InstruccionContext)_localctx).expression.p, ((InstruccionContext)_localctx).instrucciones.l,nil,nil)
 				}
 				break;
 			case 7:
 				enterOuterAlt(_localctx, 7);
 				{
-				setState(82);
-				match(P_IF);
-				setState(83);
-				((InstruccionContext)_localctx).expression = expression();
-				setState(84);
-				match(LLAVEIZQ);
-				setState(85);
-				((InstruccionContext)_localctx).i1 = instrucciones();
 				setState(86);
-				match(LLAVEDER);
+				match(P_IF);
 				setState(87);
-				match(P_ELSE);
+				((InstruccionContext)_localctx).expression = expression();
 				setState(88);
 				match(LLAVEIZQ);
 				setState(89);
-				((InstruccionContext)_localctx).i2 = instrucciones();
+				((InstruccionContext)_localctx).i1 = instrucciones();
 				setState(90);
 				match(LLAVEDER);
-				_localctx.instr = instruction.NewIf(((InstruccionContext)_localctx).expression.p, ((InstruccionContext)_localctx).i1.l,true,((InstruccionContext)_localctx).i2.l)
+				setState(91);
+				match(P_ELSE);
+				setState(92);
+				match(LLAVEIZQ);
+				setState(93);
+				((InstruccionContext)_localctx).i2 = instrucciones();
+				setState(94);
+				match(LLAVEDER);
+				_localctx.instr = instruction.NewIf(((InstruccionContext)_localctx).expression.p, ((InstruccionContext)_localctx).i1.l,nil,((InstruccionContext)_localctx).i2.l)
 				}
 				break;
 			case 8:
 				enterOuterAlt(_localctx, 8);
 				{
-				setState(93);
-				match(P_WHILE);
-				setState(94);
-				((InstruccionContext)_localctx).expression = expression();
-				setState(95);
-				match(LLAVEIZQ);
-				setState(96);
-				((InstruccionContext)_localctx).instrucciones = instrucciones();
 				setState(97);
+				match(P_IF);
+				setState(98);
+				((InstruccionContext)_localctx).expression = expression();
+				setState(99);
+				match(LLAVEIZQ);
+				setState(100);
+				((InstruccionContext)_localctx).i1 = instrucciones();
+				setState(101);
 				match(LLAVEDER);
-				_localctx.instr = instruction.NewWhile(((InstruccionContext)_localctx).expression.p, ((InstruccionContext)_localctx).instrucciones.l)
+				setState(102);
+				((InstruccionContext)_localctx).d2 = listaelseif();
+				setState(103);
+				match(P_ELSE);
+				setState(104);
+				match(LLAVEIZQ);
+				setState(105);
+				((InstruccionContext)_localctx).i2 = instrucciones();
+				setState(106);
+				match(LLAVEDER);
+				_localctx.instr = instruction.NewIf(((InstruccionContext)_localctx).expression.p, ((InstruccionContext)_localctx).i1.l,((InstruccionContext)_localctx).d2.lista,((InstruccionContext)_localctx).i2.l)
 				}
 				break;
 			case 9:
 				enterOuterAlt(_localctx, 9);
 				{
-				setState(100);
-				match(P_LOOP);
-				setState(101);
+				setState(109);
+				match(P_WHILE);
+				setState(110);
+				((InstruccionContext)_localctx).expression = expression();
+				setState(111);
 				match(LLAVEIZQ);
-				setState(102);
+				setState(112);
 				((InstruccionContext)_localctx).instrucciones = instrucciones();
-				setState(103);
+				setState(113);
 				match(LLAVEDER);
-				_localctx.instr = instruction.NewLoop(((InstruccionContext)_localctx).instrucciones.l)
+				_localctx.instr = instruction.NewWhile(((InstruccionContext)_localctx).expression.p, ((InstruccionContext)_localctx).instrucciones.l)
 				}
 				break;
 			case 10:
 				enterOuterAlt(_localctx, 10);
 				{
-				setState(106);
-				match(P_FOR);
-				setState(107);
-				((InstruccionContext)_localctx).id = match(ID);
-				setState(108);
-				match(P_IN);
-				setState(109);
-				((InstruccionContext)_localctx).f2 = expression();
-				setState(110);
+				setState(116);
+				match(P_LOOP);
+				setState(117);
 				match(LLAVEIZQ);
-				setState(111);
+				setState(118);
 				((InstruccionContext)_localctx).instrucciones = instrucciones();
-				setState(112);
+				setState(119);
+				match(LLAVEDER);
+				_localctx.instr = instruction.NewLoop(((InstruccionContext)_localctx).instrucciones.l)
+				}
+				break;
+			case 11:
+				enterOuterAlt(_localctx, 11);
+				{
+				setState(122);
+				match(P_FOR);
+				setState(123);
+				((InstruccionContext)_localctx).id = match(ID);
+				setState(124);
+				match(P_IN);
+				setState(125);
+				((InstruccionContext)_localctx).f2 = expression();
+				setState(126);
+				match(LLAVEIZQ);
+				setState(127);
+				((InstruccionContext)_localctx).instrucciones = instrucciones();
+				setState(128);
 				match(LLAVEDER);
 				_localctx.instr = instruction.NewForin((((InstruccionContext)_localctx).id!=null?((InstruccionContext)_localctx).id.getText():null),((InstruccionContext)_localctx).f2.p,((InstruccionContext)_localctx).instrucciones.l)
 				}
 				break;
+			case 12:
+				enterOuterAlt(_localctx, 12);
+				{
+				setState(131);
+				((InstruccionContext)_localctx).P_BREAK = match(P_BREAK);
+				setState(132);
+				match(PTCOMA);
+				_localctx.instr = instruction.NewBreak(interfaces.BREAK,(((InstruccionContext)_localctx).P_BREAK!=null?((InstruccionContext)_localctx).P_BREAK.getLine():0),(((InstruccionContext)_localctx).P_BREAK!=null?((InstruccionContext)_localctx).P_BREAK.getCharPositionInLine():0))
+				}
+				break;
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class ListaelseifContext extends ParserRuleContext {
+		public *arrayList.List lista;
+		public Else_ifContext else_if;
+		public List<Else_ifContext> list = new ArrayList<Else_ifContext>();
+		public List<Else_ifContext> else_if() {
+			return getRuleContexts(Else_ifContext.class);
+		}
+		public Else_ifContext else_if(int i) {
+			return getRuleContext(Else_ifContext.class,i);
+		}
+		public ListaelseifContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_listaelseif; }
+	}
+
+	public final ListaelseifContext listaelseif() throws RecognitionException {
+		ListaelseifContext _localctx = new ListaelseifContext(_ctx, getState());
+		enterRule(_localctx, 6, RULE_listaelseif);
+		 _localctx.lista = arrayList.New()
+		try {
+			int _alt;
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(139);
+			_errHandler.sync(this);
+			_alt = getInterpreter().adaptivePredict(_input,2,_ctx);
+			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
+				if ( _alt==1 ) {
+					{
+					{
+					setState(136);
+					((ListaelseifContext)_localctx).else_if = else_if();
+					((ListaelseifContext)_localctx).list.add(((ListaelseifContext)_localctx).else_if);
+					}
+					} 
+				}
+				setState(141);
+				_errHandler.sync(this);
+				_alt = getInterpreter().adaptivePredict(_input,2,_ctx);
+			}
+
+			      listInt := localctx.(*ListaelseifContext).GetList()
+			                                                                            for _, e := range listInt {
+			                                                                                _localctx.lista.Add(e.GetInstr())
+			                                                                            }
+			    
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class Else_ifContext extends ParserRuleContext {
+		public interfaces.Instruction instr;
+		public ExpressionContext expression;
+		public InstruccionesContext instrucciones;
+		public TerminalNode P_ELSE() { return getToken(Chems.P_ELSE, 0); }
+		public TerminalNode P_IF() { return getToken(Chems.P_IF, 0); }
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
+		public TerminalNode LLAVEIZQ() { return getToken(Chems.LLAVEIZQ, 0); }
+		public InstruccionesContext instrucciones() {
+			return getRuleContext(InstruccionesContext.class,0);
+		}
+		public TerminalNode LLAVEDER() { return getToken(Chems.LLAVEDER, 0); }
+		public Else_ifContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_else_if; }
+	}
+
+	public final Else_ifContext else_if() throws RecognitionException {
+		Else_ifContext _localctx = new Else_ifContext(_ctx, getState());
+		enterRule(_localctx, 8, RULE_else_if);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(144);
+			match(P_ELSE);
+			setState(145);
+			match(P_IF);
+			setState(146);
+			((Else_ifContext)_localctx).expression = expression();
+			setState(147);
+			match(LLAVEIZQ);
+			setState(148);
+			((Else_ifContext)_localctx).instrucciones = instrucciones();
+			setState(149);
+			match(LLAVEDER);
+			_localctx.instr = instruction.NewIf(((Else_ifContext)_localctx).expression.p, ((Else_ifContext)_localctx).instrucciones.l,nil,nil)
 			}
 		}
 		catch (RecognitionException re) {
@@ -488,15 +643,15 @@ public class Chems extends Parser {
 
 	public final TipoContext tipo() throws RecognitionException {
 		TipoContext _localctx = new TipoContext(_ctx, getState());
-		enterRule(_localctx, 6, RULE_tipo);
+		enterRule(_localctx, 10, RULE_tipo);
 		try {
-			setState(123);
+			setState(158);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case P_F64:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(117);
+				setState(152);
 				match(P_F64);
 				_localctx.p=interfaces.FLOAT
 				}
@@ -504,7 +659,7 @@ public class Chems extends Parser {
 			case P_I64:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(119);
+				setState(154);
 				match(P_I64);
 				_localctx.p=interfaces.INTEGER
 				}
@@ -512,7 +667,7 @@ public class Chems extends Parser {
 			case P_STRING:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(121);
+				setState(156);
 				match(P_STRING);
 				_localctx.p=interfaces.STRING
 				}
@@ -543,15 +698,15 @@ public class Chems extends Parser {
 
 	public final MutContext mut() throws RecognitionException {
 		MutContext _localctx = new MutContext(_ctx, getState());
-		enterRule(_localctx, 8, RULE_mut);
+		enterRule(_localctx, 12, RULE_mut);
 		try {
-			setState(128);
+			setState(163);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case P_MUT:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(125);
+				setState(160);
 				match(P_MUT);
 				 _localctx.arr = true 
 				}
@@ -589,17 +744,17 @@ public class Chems extends Parser {
 
 	public final Array_stContext array_st() throws RecognitionException {
 		Array_stContext _localctx = new Array_stContext(_ctx, getState());
-		enterRule(_localctx, 10, RULE_array_st);
+		enterRule(_localctx, 14, RULE_array_st);
 		try {
-			setState(134);
+			setState(169);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case CORIZQ:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(130);
+				setState(165);
 				match(CORIZQ);
-				setState(131);
+				setState(166);
 				match(CORDER);
 				 _localctx.arr = true 
 				}
@@ -638,11 +793,11 @@ public class Chems extends Parser {
 
 	public final ExpressionContext expression() throws RecognitionException {
 		ExpressionContext _localctx = new ExpressionContext(_ctx, getState());
-		enterRule(_localctx, 12, RULE_expression);
+		enterRule(_localctx, 16, RULE_expression);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(136);
+			setState(171);
 			((ExpressionContext)_localctx).expr_arit = expr_arit(0);
 			_localctx.p = ((ExpressionContext)_localctx).expr_arit.p
 			}
@@ -729,20 +884,20 @@ public class Chems extends Parser {
 		int _parentState = getState();
 		Expr_aritContext _localctx = new Expr_aritContext(_ctx, _parentState);
 		Expr_aritContext _prevctx = _localctx;
-		int _startState = 14;
-		enterRecursionRule(_localctx, 14, RULE_expr_arit, _p);
+		int _startState = 18;
+		enterRecursionRule(_localctx, 18, RULE_expr_arit, _p);
 		int _la;
 		try {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(168);
+			setState(203);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case P_I64:
 			case P_F64:
 				{
-				setState(140);
+				setState(175);
 				((Expr_aritContext)_localctx).reservada = _input.LT(1);
 				_la = _input.LA(1);
 				if ( !(_la==P_I64 || _la==P_F64) ) {
@@ -753,11 +908,11 @@ public class Chems extends Parser {
 					_errHandler.reportMatch(this);
 					consume();
 				}
-				setState(141);
+				setState(176);
 				match(DOSPUNTOS);
-				setState(142);
+				setState(177);
 				match(DOSPUNTOS);
-				setState(143);
+				setState(178);
 				((Expr_aritContext)_localctx).op = _input.LT(1);
 				_la = _input.LA(1);
 				if ( !(_la==P_POW || _la==P_POWF) ) {
@@ -768,35 +923,35 @@ public class Chems extends Parser {
 					_errHandler.reportMatch(this);
 					consume();
 				}
-				setState(144);
+				setState(179);
 				match(PARIZQ);
-				setState(145);
+				setState(180);
 				((Expr_aritContext)_localctx).opIz = expr_arit(0);
-				setState(146);
+				setState(181);
 				match(COMA);
-				setState(147);
+				setState(182);
 				((Expr_aritContext)_localctx).opDe = expr_arit(0);
-				setState(148);
+				setState(183);
 				match(PARDER);
 				_localctx.p = expresion.NewOperacion(((Expr_aritContext)_localctx).opIz.p,(((Expr_aritContext)_localctx).op!=null?((Expr_aritContext)_localctx).op.getText():null),((Expr_aritContext)_localctx).opDe.p,false,(((Expr_aritContext)_localctx).opIz!=null?(((Expr_aritContext)_localctx).opIz.start):null).GetLine(),(((Expr_aritContext)_localctx).opIz!=null?(((Expr_aritContext)_localctx).opIz.start):null).GetColumn())
 				}
 				break;
 			case DIFERENTE:
 				{
-				setState(151);
+				setState(186);
 				((Expr_aritContext)_localctx).op = match(DIFERENTE);
-				setState(152);
+				setState(187);
 				((Expr_aritContext)_localctx).opDe = expr_arit(8);
 				_localctx.p = expresion.NewOperacion(nil,(((Expr_aritContext)_localctx).op!=null?((Expr_aritContext)_localctx).op.getText():null),((Expr_aritContext)_localctx).opDe.p,false,(((Expr_aritContext)_localctx).opDe!=null?(((Expr_aritContext)_localctx).opDe.start):null).GetLine(),(((Expr_aritContext)_localctx).opDe!=null?(((Expr_aritContext)_localctx).opDe.start):null).GetColumn())
 				}
 				break;
 			case CORIZQ:
 				{
-				setState(155);
+				setState(190);
 				match(CORIZQ);
-				setState(156);
+				setState(191);
 				((Expr_aritContext)_localctx).listValues = listValues(0);
-				setState(157);
+				setState(192);
 				match(CORDER);
 				 _localctx.p = expresion.NewArray(((Expr_aritContext)_localctx).listValues.l) 
 				}
@@ -809,18 +964,18 @@ public class Chems extends Parser {
 			case ID:
 			case SUB:
 				{
-				setState(160);
+				setState(195);
 				((Expr_aritContext)_localctx).primitivo = primitivo();
 				_localctx.p = ((Expr_aritContext)_localctx).primitivo.p
 				}
 				break;
 			case PARIZQ:
 				{
-				setState(163);
+				setState(198);
 				match(PARIZQ);
-				setState(164);
+				setState(199);
 				((Expr_aritContext)_localctx).expression = expression();
-				setState(165);
+				setState(200);
 				match(PARDER);
 				_localctx.p = ((Expr_aritContext)_localctx).expression.p
 				}
@@ -829,26 +984,26 @@ public class Chems extends Parser {
 				throw new NoViableAltException(this);
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(221);
+			setState(256);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,7,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,8,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					setState(219);
+					setState(254);
 					_errHandler.sync(this);
-					switch ( getInterpreter().adaptivePredict(_input,6,_ctx) ) {
+					switch ( getInterpreter().adaptivePredict(_input,7,_ctx) ) {
 					case 1:
 						{
 						_localctx = new Expr_aritContext(_parentctx, _parentState);
 						_localctx.opIz = _prevctx;
 						_localctx.opIz = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expr_arit);
-						setState(170);
+						setState(205);
 						if (!(precpred(_ctx, 14))) throw new FailedPredicateException(this, "precpred(_ctx, 14)");
-						setState(171);
+						setState(206);
 						((Expr_aritContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==MUL || _la==DIV) ) {
@@ -859,7 +1014,7 @@ public class Chems extends Parser {
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(172);
+						setState(207);
 						((Expr_aritContext)_localctx).opDe = expr_arit(15);
 						_localctx.p = expresion.NewOperacion(((Expr_aritContext)_localctx).opIz.p,(((Expr_aritContext)_localctx).op!=null?((Expr_aritContext)_localctx).op.getText():null),((Expr_aritContext)_localctx).opDe.p,false,(((Expr_aritContext)_localctx).opIz!=null?(((Expr_aritContext)_localctx).opIz.start):null).GetLine(),(((Expr_aritContext)_localctx).opIz!=null?(((Expr_aritContext)_localctx).opIz.start):null).GetColumn())
 						}
@@ -870,9 +1025,9 @@ public class Chems extends Parser {
 						_localctx.opIz = _prevctx;
 						_localctx.opIz = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expr_arit);
-						setState(175);
+						setState(210);
 						if (!(precpred(_ctx, 13))) throw new FailedPredicateException(this, "precpred(_ctx, 13)");
-						setState(176);
+						setState(211);
 						((Expr_aritContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==ADD || _la==SUB) ) {
@@ -883,7 +1038,7 @@ public class Chems extends Parser {
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(177);
+						setState(212);
 						((Expr_aritContext)_localctx).opDe = expr_arit(14);
 						_localctx.p = expresion.NewOperacion(((Expr_aritContext)_localctx).opIz.p,(((Expr_aritContext)_localctx).op!=null?((Expr_aritContext)_localctx).op.getText():null),((Expr_aritContext)_localctx).opDe.p,false,(((Expr_aritContext)_localctx).opIz!=null?(((Expr_aritContext)_localctx).opIz.start):null).GetLine(),(((Expr_aritContext)_localctx).opIz!=null?(((Expr_aritContext)_localctx).opIz.start):null).GetColumn())
 						}
@@ -894,9 +1049,9 @@ public class Chems extends Parser {
 						_localctx.opIz = _prevctx;
 						_localctx.opIz = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expr_arit);
-						setState(180);
+						setState(215);
 						if (!(precpred(_ctx, 11))) throw new FailedPredicateException(this, "precpred(_ctx, 11)");
-						setState(181);
+						setState(216);
 						((Expr_aritContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << DIFERENTEDE) | (1L << MAYORIGUAL) | (1L << MENORIGUAL) | (1L << MAYOR) | (1L << MENOR) | (1L << MODULO))) != 0)) ) {
@@ -907,7 +1062,7 @@ public class Chems extends Parser {
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(182);
+						setState(217);
 						((Expr_aritContext)_localctx).opDe = expr_arit(12);
 						_localctx.p = expresion.NewOperacion(((Expr_aritContext)_localctx).opIz.p,(((Expr_aritContext)_localctx).op!=null?((Expr_aritContext)_localctx).op.getText():null),((Expr_aritContext)_localctx).opDe.p,false,(((Expr_aritContext)_localctx).opIz!=null?(((Expr_aritContext)_localctx).opIz.start):null).GetLine(),(((Expr_aritContext)_localctx).opIz!=null?(((Expr_aritContext)_localctx).opIz.start):null).GetColumn())
 						}
@@ -918,11 +1073,11 @@ public class Chems extends Parser {
 						_localctx.opIz = _prevctx;
 						_localctx.opIz = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expr_arit);
-						setState(185);
+						setState(220);
 						if (!(precpred(_ctx, 10))) throw new FailedPredicateException(this, "precpred(_ctx, 10)");
-						setState(186);
+						setState(221);
 						((Expr_aritContext)_localctx).op = match(IGUALIGUA);
-						setState(187);
+						setState(222);
 						((Expr_aritContext)_localctx).opDe = expr_arit(11);
 						_localctx.p = expresion.NewOperacion(((Expr_aritContext)_localctx).opIz.p,(((Expr_aritContext)_localctx).op!=null?((Expr_aritContext)_localctx).op.getText():null),((Expr_aritContext)_localctx).opDe.p,false,(((Expr_aritContext)_localctx).opIz!=null?(((Expr_aritContext)_localctx).opIz.start):null).GetLine(),(((Expr_aritContext)_localctx).opIz!=null?(((Expr_aritContext)_localctx).opIz.start):null).GetColumn())
 						}
@@ -933,9 +1088,9 @@ public class Chems extends Parser {
 						_localctx.opIz = _prevctx;
 						_localctx.opIz = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expr_arit);
-						setState(190);
+						setState(225);
 						if (!(precpred(_ctx, 9))) throw new FailedPredicateException(this, "precpred(_ctx, 9)");
-						setState(191);
+						setState(226);
 						((Expr_aritContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==OR || _la==AND) ) {
@@ -946,7 +1101,7 @@ public class Chems extends Parser {
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(192);
+						setState(227);
 						((Expr_aritContext)_localctx).opDe = expr_arit(10);
 						_localctx.p = expresion.NewOperacion(((Expr_aritContext)_localctx).opIz.p,(((Expr_aritContext)_localctx).op!=null?((Expr_aritContext)_localctx).op.getText():null),((Expr_aritContext)_localctx).opDe.p,false,(((Expr_aritContext)_localctx).opIz!=null?(((Expr_aritContext)_localctx).opIz.start):null).GetLine(),(((Expr_aritContext)_localctx).opIz!=null?(((Expr_aritContext)_localctx).opIz.start):null).GetColumn())
 						}
@@ -957,15 +1112,15 @@ public class Chems extends Parser {
 						_localctx.opIz = _prevctx;
 						_localctx.opIz = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expr_arit);
-						setState(195);
+						setState(230);
 						if (!(precpred(_ctx, 7))) throw new FailedPredicateException(this, "precpred(_ctx, 7)");
-						setState(196);
+						setState(231);
 						match(PUNTO);
-						setState(197);
+						setState(232);
 						((Expr_aritContext)_localctx).op = match(P_ABS);
-						setState(198);
+						setState(233);
 						match(PARIZQ);
-						setState(199);
+						setState(234);
 						match(PARDER);
 						_localctx.p = expresion.NewNativas(((Expr_aritContext)_localctx).opIz.p,(((Expr_aritContext)_localctx).op!=null?((Expr_aritContext)_localctx).op.getText():null),(((Expr_aritContext)_localctx).opIz!=null?(((Expr_aritContext)_localctx).opIz.start):null).GetLine(),(((Expr_aritContext)_localctx).opIz!=null?(((Expr_aritContext)_localctx).opIz.start):null).GetColumn())
 						}
@@ -976,15 +1131,15 @@ public class Chems extends Parser {
 						_localctx.opIz = _prevctx;
 						_localctx.opIz = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expr_arit);
-						setState(201);
+						setState(236);
 						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
-						setState(202);
+						setState(237);
 						match(PUNTO);
-						setState(203);
+						setState(238);
 						((Expr_aritContext)_localctx).op = match(P_SQRT);
-						setState(204);
+						setState(239);
 						match(PARIZQ);
-						setState(205);
+						setState(240);
 						match(PARDER);
 						_localctx.p = expresion.NewNativas(((Expr_aritContext)_localctx).opIz.p,(((Expr_aritContext)_localctx).op!=null?((Expr_aritContext)_localctx).op.getText():null),(((Expr_aritContext)_localctx).opIz!=null?(((Expr_aritContext)_localctx).opIz.start):null).GetLine(),(((Expr_aritContext)_localctx).opIz!=null?(((Expr_aritContext)_localctx).opIz.start):null).GetColumn())
 						}
@@ -995,15 +1150,15 @@ public class Chems extends Parser {
 						_localctx.opIz = _prevctx;
 						_localctx.opIz = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expr_arit);
-						setState(207);
+						setState(242);
 						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
-						setState(208);
+						setState(243);
 						match(PUNTO);
-						setState(209);
+						setState(244);
 						((Expr_aritContext)_localctx).op = match(P_TOSTRING);
-						setState(210);
+						setState(245);
 						match(PARIZQ);
-						setState(211);
+						setState(246);
 						match(PARDER);
 						_localctx.p = expresion.NewNativas(((Expr_aritContext)_localctx).opIz.p,(((Expr_aritContext)_localctx).op!=null?((Expr_aritContext)_localctx).op.getText():null),(((Expr_aritContext)_localctx).opIz!=null?(((Expr_aritContext)_localctx).opIz.start):null).GetLine(),(((Expr_aritContext)_localctx).opIz!=null?(((Expr_aritContext)_localctx).opIz.start):null).GetColumn())
 						}
@@ -1014,15 +1169,15 @@ public class Chems extends Parser {
 						_localctx.opIz = _prevctx;
 						_localctx.opIz = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expr_arit);
-						setState(213);
+						setState(248);
 						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
-						setState(214);
+						setState(249);
 						match(PUNTO);
-						setState(215);
+						setState(250);
 						((Expr_aritContext)_localctx).op = match(P_CLONE);
-						setState(216);
+						setState(251);
 						match(PARIZQ);
-						setState(217);
+						setState(252);
 						match(PARDER);
 						_localctx.p = expresion.NewNativas(((Expr_aritContext)_localctx).opIz.p,(((Expr_aritContext)_localctx).op!=null?((Expr_aritContext)_localctx).op.getText():null),(((Expr_aritContext)_localctx).opIz!=null?(((Expr_aritContext)_localctx).opIz.start):null).GetLine(),(((Expr_aritContext)_localctx).opIz!=null?(((Expr_aritContext)_localctx).opIz.start):null).GetColumn())
 						}
@@ -1030,9 +1185,9 @@ public class Chems extends Parser {
 					}
 					} 
 				}
-				setState(223);
+				setState(258);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,7,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,8,_ctx);
 			}
 			}
 		}
@@ -1073,14 +1228,14 @@ public class Chems extends Parser {
 		int _parentState = getState();
 		ListValuesContext _localctx = new ListValuesContext(_ctx, _parentState);
 		ListValuesContext _prevctx = _localctx;
-		int _startState = 16;
-		enterRecursionRule(_localctx, 16, RULE_listValues, _p);
+		int _startState = 20;
+		enterRecursionRule(_localctx, 20, RULE_listValues, _p);
 		try {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
 			{
-			setState(225);
+			setState(260);
 			((ListValuesContext)_localctx).expression = expression();
 			 
 			                    _localctx.l = arrayList.New()
@@ -1088,9 +1243,9 @@ public class Chems extends Parser {
 			                
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(235);
+			setState(270);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,8,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,9,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
@@ -1101,11 +1256,11 @@ public class Chems extends Parser {
 					_localctx.list = _prevctx;
 					_localctx.list = _prevctx;
 					pushNewRecursionContext(_localctx, _startState, RULE_listValues);
-					setState(228);
+					setState(263);
 					if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
-					setState(229);
+					setState(264);
 					match(COMA);
-					setState(230);
+					setState(265);
 					((ListValuesContext)_localctx).expression = expression();
 					 
 					                                                  ((ListValuesContext)_localctx).list.l.Add(((ListValuesContext)_localctx).expression.p)
@@ -1114,9 +1269,9 @@ public class Chems extends Parser {
 					}
 					} 
 				}
-				setState(237);
+				setState(272);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,8,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,9,_ctx);
 			}
 			}
 		}
@@ -1157,15 +1312,15 @@ public class Chems extends Parser {
 
 	public final PrimitivoContext primitivo() throws RecognitionException {
 		PrimitivoContext _localctx = new PrimitivoContext(_ctx, getState());
-		enterRule(_localctx, 18, RULE_primitivo);
+		enterRule(_localctx, 22, RULE_primitivo);
 		try {
-			setState(265);
+			setState(300);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,9,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,10,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(238);
+				setState(273);
 				((PrimitivoContext)_localctx).NUMBER = match(NUMBER);
 
 				            	num,err := strconv.Atoi((((PrimitivoContext)_localctx).NUMBER!=null?((PrimitivoContext)_localctx).NUMBER.getText():null))
@@ -1180,9 +1335,9 @@ public class Chems extends Parser {
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(240);
+				setState(275);
 				match(SUB);
-				setState(241);
+				setState(276);
 				((PrimitivoContext)_localctx).NUMBER = match(NUMBER);
 
 				            	num,err := strconv.Atoi((((PrimitivoContext)_localctx).NUMBER!=null?((PrimitivoContext)_localctx).NUMBER.getText():null))
@@ -1197,9 +1352,9 @@ public class Chems extends Parser {
 			case 3:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(243);
+				setState(278);
 				match(SUB);
-				setState(244);
+				setState(279);
 				((PrimitivoContext)_localctx).DECIMAL = match(DECIMAL);
 
 				            	num,err := strconv.ParseFloat((((PrimitivoContext)_localctx).DECIMAL!=null?((PrimitivoContext)_localctx).DECIMAL.getText():null),64)
@@ -1214,7 +1369,7 @@ public class Chems extends Parser {
 			case 4:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(246);
+				setState(281);
 				((PrimitivoContext)_localctx).STRING = match(STRING);
 				 
 				              
@@ -1226,7 +1381,7 @@ public class Chems extends Parser {
 			case 5:
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(248);
+				setState(283);
 				((PrimitivoContext)_localctx).DECIMAL = match(DECIMAL);
 
 				            	num,err := strconv.ParseFloat((((PrimitivoContext)_localctx).DECIMAL!=null?((PrimitivoContext)_localctx).DECIMAL.getText():null),64)
@@ -1241,11 +1396,11 @@ public class Chems extends Parser {
 			case 6:
 				enterOuterAlt(_localctx, 6);
 				{
-				setState(250);
+				setState(285);
 				((PrimitivoContext)_localctx).DECIMAL = match(DECIMAL);
-				setState(251);
+				setState(286);
 				match(P_AS);
-				setState(252);
+				setState(287);
 				match(P_I64);
 
 				            	num,err := strconv.ParseFloat((((PrimitivoContext)_localctx).DECIMAL!=null?((PrimitivoContext)_localctx).DECIMAL.getText():null),64)
@@ -1260,11 +1415,11 @@ public class Chems extends Parser {
 			case 7:
 				enterOuterAlt(_localctx, 7);
 				{
-				setState(254);
+				setState(289);
 				((PrimitivoContext)_localctx).NUMBER = match(NUMBER);
-				setState(255);
+				setState(290);
 				match(P_AS);
-				setState(256);
+				setState(291);
 				match(P_F64);
 
 				           num,err := strconv.Atoi((((PrimitivoContext)_localctx).NUMBER!=null?((PrimitivoContext)_localctx).NUMBER.getText():null))
@@ -1279,7 +1434,7 @@ public class Chems extends Parser {
 			case 8:
 				enterOuterAlt(_localctx, 8);
 				{
-				setState(258);
+				setState(293);
 				((PrimitivoContext)_localctx).list = listArray(0);
 				 _localctx.p = ((PrimitivoContext)_localctx).list.p
 				}
@@ -1287,7 +1442,7 @@ public class Chems extends Parser {
 			case 9:
 				enterOuterAlt(_localctx, 9);
 				{
-				setState(261);
+				setState(296);
 				match(P_TRUE);
 				      
 				      _localctx.p = expresion.NewPrimitivo("true",interfaces.TRUE)
@@ -1296,7 +1451,7 @@ public class Chems extends Parser {
 			case 10:
 				enterOuterAlt(_localctx, 10);
 				{
-				setState(263);
+				setState(298);
 				match(P_FALSE);
 				      
 				      _localctx.p = expresion.NewPrimitivo("false",interfaces.FALSE)
@@ -1344,21 +1499,21 @@ public class Chems extends Parser {
 		int _parentState = getState();
 		ListArrayContext _localctx = new ListArrayContext(_ctx, _parentState);
 		ListArrayContext _prevctx = _localctx;
-		int _startState = 20;
-		enterRecursionRule(_localctx, 20, RULE_listArray, _p);
+		int _startState = 24;
+		enterRecursionRule(_localctx, 24, RULE_listArray, _p);
 		try {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
 			{
-			setState(268);
+			setState(303);
 			((ListArrayContext)_localctx).ID = match(ID);
 			 _localctx.p = expresion.NewCallVariable((((ListArrayContext)_localctx).ID!=null?((ListArrayContext)_localctx).ID.getText():null))
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(279);
+			setState(314);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,10,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,11,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
@@ -1369,21 +1524,21 @@ public class Chems extends Parser {
 					_localctx.list = _prevctx;
 					_localctx.list = _prevctx;
 					pushNewRecursionContext(_localctx, _startState, RULE_listArray);
-					setState(271);
+					setState(306);
 					if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
-					setState(272);
+					setState(307);
 					match(CORIZQ);
-					setState(273);
+					setState(308);
 					((ListArrayContext)_localctx).expression = expression();
-					setState(274);
+					setState(309);
 					match(CORDER);
 					 _localctx.p = expresion.NewArrayAccess(((ListArrayContext)_localctx).list.p, ((ListArrayContext)_localctx).expression.p) 
 					}
 					} 
 				}
-				setState(281);
+				setState(316);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,10,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,11,_ctx);
 			}
 			}
 		}
@@ -1400,11 +1555,11 @@ public class Chems extends Parser {
 
 	public boolean sempred(RuleContext _localctx, int ruleIndex, int predIndex) {
 		switch (ruleIndex) {
-		case 7:
+		case 9:
 			return expr_arit_sempred((Expr_aritContext)_localctx, predIndex);
-		case 8:
-			return listValues_sempred((ListValuesContext)_localctx, predIndex);
 		case 10:
+			return listValues_sempred((ListValuesContext)_localctx, predIndex);
+		case 12:
 			return listArray_sempred((ListArrayContext)_localctx, predIndex);
 		}
 		return true;
@@ -1448,100 +1603,116 @@ public class Chems extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\39\u011d\4\2\t\2\4"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3:\u0140\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
-		"\13\4\f\t\f\3\2\3\2\3\2\3\3\7\3\35\n\3\f\3\16\3 \13\3\3\3\3\3\3\4\3\4"+
-		"\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3"+
+		"\13\4\f\t\f\4\r\t\r\4\16\t\16\3\2\3\2\3\2\3\3\7\3!\n\3\f\3\16\3$\13\3"+
+		"\3\3\3\3\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3"+
 		"\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4"+
 		"\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3"+
 		"\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4"+
-		"\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\5\4v\n\4\3\5\3\5\3\5\3\5\3\5"+
-		"\3\5\5\5~\n\5\3\6\3\6\3\6\5\6\u0083\n\6\3\7\3\7\3\7\3\7\5\7\u0089\n\7"+
-		"\3\b\3\b\3\b\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3"+
-		"\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\5\t\u00ab\n"+
-		"\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t"+
-		"\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3"+
-		"\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\7\t\u00de\n"+
-		"\t\f\t\16\t\u00e1\13\t\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\7\n\u00ec\n"+
-		"\n\f\n\16\n\u00ef\13\n\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3"+
-		"\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3"+
-		"\13\3\13\3\13\3\13\5\13\u010c\n\13\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f"+
-		"\3\f\7\f\u0118\n\f\f\f\16\f\u011b\13\f\3\f\2\5\20\22\26\r\2\4\6\b\n\f"+
-		"\16\20\22\24\26\2\b\3\2\f\r\3\2\n\13\3\2+,\3\2./\5\2$$\'*--\3\2\66\67"+
-		"\2\u0137\2\30\3\2\2\2\4\36\3\2\2\2\6u\3\2\2\2\b}\3\2\2\2\n\u0082\3\2\2"+
-		"\2\f\u0088\3\2\2\2\16\u008a\3\2\2\2\20\u00aa\3\2\2\2\22\u00e2\3\2\2\2"+
-		"\24\u010b\3\2\2\2\26\u010d\3\2\2\2\30\31\5\4\3\2\31\32\b\2\1\2\32\3\3"+
-		"\2\2\2\33\35\5\6\4\2\34\33\3\2\2\2\35 \3\2\2\2\36\34\3\2\2\2\36\37\3\2"+
-		"\2\2\37!\3\2\2\2 \36\3\2\2\2!\"\b\3\1\2\"\5\3\2\2\2#$\7\3\2\2$%\7#\2\2"+
-		"%&\7\60\2\2&\'\5\16\b\2\'(\7\61\2\2()\7 \2\2)*\b\4\1\2*v\3\2\2\2+,\7\4"+
-		"\2\2,-\7#\2\2-.\7\60\2\2./\5\16\b\2/\60\7\61\2\2\60\61\7 \2\2\61\62\b"+
-		"\4\1\2\62v\3\2\2\2\63\64\7\16\2\2\64\65\5\n\6\2\65\66\5\f\7\2\66\67\7"+
-		"\36\2\2\678\7\"\2\289\5\b\5\29:\7%\2\2:;\5\16\b\2;<\7 \2\2<=\b\4\1\2="+
-		"v\3\2\2\2>?\7\16\2\2?@\5\n\6\2@A\5\f\7\2AB\7\36\2\2BC\7%\2\2CD\5\16\b"+
-		"\2DE\7 \2\2EF\b\4\1\2Fv\3\2\2\2GH\7\36\2\2HI\7%\2\2IJ\5\16\b\2JK\7 \2"+
-		"\2KL\b\4\1\2Lv\3\2\2\2MN\7\7\2\2NO\5\16\b\2OP\7\62\2\2PQ\5\4\3\2QR\7\63"+
-		"\2\2RS\b\4\1\2Sv\3\2\2\2TU\7\7\2\2UV\5\16\b\2VW\7\62\2\2WX\5\4\3\2XY\7"+
-		"\63\2\2YZ\7\b\2\2Z[\7\62\2\2[\\\5\4\3\2\\]\7\63\2\2]^\b\4\1\2^v\3\2\2"+
-		"\2_`\7\t\2\2`a\5\16\b\2ab\7\62\2\2bc\5\4\3\2cd\7\63\2\2de\b\4\1\2ev\3"+
-		"\2\2\2fg\7\24\2\2gh\7\62\2\2hi\5\4\3\2ij\7\63\2\2jk\b\4\1\2kv\3\2\2\2"+
-		"lm\7\31\2\2mn\7\36\2\2no\7\32\2\2op\5\16\b\2pq\7\62\2\2qr\5\4\3\2rs\7"+
-		"\63\2\2st\b\4\1\2tv\3\2\2\2u#\3\2\2\2u+\3\2\2\2u\63\3\2\2\2u>\3\2\2\2"+
-		"uG\3\2\2\2uM\3\2\2\2uT\3\2\2\2u_\3\2\2\2uf\3\2\2\2ul\3\2\2\2v\7\3\2\2"+
-		"\2wx\7\r\2\2x~\b\5\1\2yz\7\f\2\2z~\b\5\1\2{|\7\6\2\2|~\b\5\1\2}w\3\2\2"+
-		"\2}y\3\2\2\2}{\3\2\2\2~\t\3\2\2\2\177\u0080\7\17\2\2\u0080\u0083\b\6\1"+
-		"\2\u0081\u0083\3\2\2\2\u0082\177\3\2\2\2\u0082\u0081\3\2\2\2\u0083\13"+
-		"\3\2\2\2\u0084\u0085\7\64\2\2\u0085\u0086\7\65\2\2\u0086\u0089\b\7\1\2"+
-		"\u0087\u0089\3\2\2\2\u0088\u0084\3\2\2\2\u0088\u0087\3\2\2\2\u0089\r\3"+
-		"\2\2\2\u008a\u008b\5\20\t\2\u008b\u008c\b\b\1\2\u008c\17\3\2\2\2\u008d"+
-		"\u008e\b\t\1\2\u008e\u008f\t\2\2\2\u008f\u0090\7\"\2\2\u0090\u0091\7\""+
-		"\2\2\u0091\u0092\t\3\2\2\u0092\u0093\7\60\2\2\u0093\u0094\5\20\t\2\u0094"+
-		"\u0095\7!\2\2\u0095\u0096\5\20\t\2\u0096\u0097\7\61\2\2\u0097\u0098\b"+
-		"\t\1\2\u0098\u00ab\3\2\2\2\u0099\u009a\7#\2\2\u009a\u009b\5\20\t\n\u009b"+
-		"\u009c\b\t\1\2\u009c\u00ab\3\2\2\2\u009d\u009e\7\64\2\2\u009e\u009f\5"+
-		"\22\n\2\u009f\u00a0\7\65\2\2\u00a0\u00a1\b\t\1\2\u00a1\u00ab\3\2\2\2\u00a2"+
-		"\u00a3\5\24\13\2\u00a3\u00a4\b\t\1\2\u00a4\u00ab\3\2\2\2\u00a5\u00a6\7"+
-		"\60\2\2\u00a6\u00a7\5\16\b\2\u00a7\u00a8\7\61\2\2\u00a8\u00a9\b\t\1\2"+
-		"\u00a9\u00ab\3\2\2\2\u00aa\u008d\3\2\2\2\u00aa\u0099\3\2\2\2\u00aa\u009d"+
-		"\3\2\2\2\u00aa\u00a2\3\2\2\2\u00aa\u00a5\3\2\2\2\u00ab\u00df\3\2\2\2\u00ac"+
-		"\u00ad\f\20\2\2\u00ad\u00ae\t\4\2\2\u00ae\u00af\5\20\t\21\u00af\u00b0"+
-		"\b\t\1\2\u00b0\u00de\3\2\2\2\u00b1\u00b2\f\17\2\2\u00b2\u00b3\t\5\2\2"+
-		"\u00b3\u00b4\5\20\t\20\u00b4\u00b5\b\t\1\2\u00b5\u00de\3\2\2\2\u00b6\u00b7"+
-		"\f\r\2\2\u00b7\u00b8\t\6\2\2\u00b8\u00b9\5\20\t\16\u00b9\u00ba\b\t\1\2"+
-		"\u00ba\u00de\3\2\2\2\u00bb\u00bc\f\f\2\2\u00bc\u00bd\7&\2\2\u00bd\u00be"+
-		"\5\20\t\r\u00be\u00bf\b\t\1\2\u00bf\u00de\3\2\2\2\u00c0\u00c1\f\13\2\2"+
-		"\u00c1\u00c2\t\7\2\2\u00c2\u00c3\5\20\t\f\u00c3\u00c4\b\t\1\2\u00c4\u00de"+
-		"\3\2\2\2\u00c5\u00c6\f\t\2\2\u00c6\u00c7\7\37\2\2\u00c7\u00c8\7\25\2\2"+
-		"\u00c8\u00c9\7\60\2\2\u00c9\u00ca\7\61\2\2\u00ca\u00de\b\t\1\2\u00cb\u00cc"+
-		"\f\b\2\2\u00cc\u00cd\7\37\2\2\u00cd\u00ce\7\26\2\2\u00ce\u00cf\7\60\2"+
-		"\2\u00cf\u00d0\7\61\2\2\u00d0\u00de\b\t\1\2\u00d1\u00d2\f\7\2\2\u00d2"+
-		"\u00d3\7\37\2\2\u00d3\u00d4\7\27\2\2\u00d4\u00d5\7\60\2\2\u00d5\u00d6"+
-		"\7\61\2\2\u00d6\u00de\b\t\1\2\u00d7\u00d8\f\6\2\2\u00d8\u00d9\7\37\2\2"+
-		"\u00d9\u00da\7\30\2\2\u00da\u00db\7\60\2\2\u00db\u00dc\7\61\2\2\u00dc"+
-		"\u00de\b\t\1\2\u00dd\u00ac\3\2\2\2\u00dd\u00b1\3\2\2\2\u00dd\u00b6\3\2"+
-		"\2\2\u00dd\u00bb\3\2\2\2\u00dd\u00c0\3\2\2\2\u00dd\u00c5\3\2\2\2\u00dd"+
-		"\u00cb\3\2\2\2\u00dd\u00d1\3\2\2\2\u00dd\u00d7\3\2\2\2\u00de\u00e1\3\2"+
-		"\2\2\u00df\u00dd\3\2\2\2\u00df\u00e0\3\2\2\2\u00e0\21\3\2\2\2\u00e1\u00df"+
-		"\3\2\2\2\u00e2\u00e3\b\n\1\2\u00e3\u00e4\5\16\b\2\u00e4\u00e5\b\n\1\2"+
-		"\u00e5\u00ed\3\2\2\2\u00e6\u00e7\f\4\2\2\u00e7\u00e8\7!\2\2\u00e8\u00e9"+
-		"\5\16\b\2\u00e9\u00ea\b\n\1\2\u00ea\u00ec\3\2\2\2\u00eb\u00e6\3\2\2\2"+
-		"\u00ec\u00ef\3\2\2\2\u00ed\u00eb\3\2\2\2\u00ed\u00ee\3\2\2\2\u00ee\23"+
-		"\3\2\2\2\u00ef\u00ed\3\2\2\2\u00f0\u00f1\7\33\2\2\u00f1\u010c\b\13\1\2"+
-		"\u00f2\u00f3\7/\2\2\u00f3\u00f4\7\33\2\2\u00f4\u010c\b\13\1\2\u00f5\u00f6"+
-		"\7/\2\2\u00f6\u00f7\7\34\2\2\u00f7\u010c\b\13\1\2\u00f8\u00f9\7\35\2\2"+
-		"\u00f9\u010c\b\13\1\2\u00fa\u00fb\7\34\2\2\u00fb\u010c\b\13\1\2\u00fc"+
-		"\u00fd\7\34\2\2\u00fd\u00fe\7\20\2\2\u00fe\u00ff\7\f\2\2\u00ff\u010c\b"+
-		"\13\1\2\u0100\u0101\7\33\2\2\u0101\u0102\7\20\2\2\u0102\u0103\7\r\2\2"+
-		"\u0103\u010c\b\13\1\2\u0104\u0105\5\26\f\2\u0105\u0106\b\13\1\2\u0106"+
-		"\u010c\3\2\2\2\u0107\u0108\7\21\2\2\u0108\u010c\b\13\1\2\u0109\u010a\7"+
-		"\22\2\2\u010a\u010c\b\13\1\2\u010b\u00f0\3\2\2\2\u010b\u00f2\3\2\2\2\u010b"+
-		"\u00f5\3\2\2\2\u010b\u00f8\3\2\2\2\u010b\u00fa\3\2\2\2\u010b\u00fc\3\2"+
-		"\2\2\u010b\u0100\3\2\2\2\u010b\u0104\3\2\2\2\u010b\u0107\3\2\2\2\u010b"+
-		"\u0109\3\2\2\2\u010c\25\3\2\2\2\u010d\u010e\b\f\1\2\u010e\u010f\7\36\2"+
-		"\2\u010f\u0110\b\f\1\2\u0110\u0119\3\2\2\2\u0111\u0112\f\4\2\2\u0112\u0113"+
-		"\7\64\2\2\u0113\u0114\5\16\b\2\u0114\u0115\7\65\2\2\u0115\u0116\b\f\1"+
-		"\2\u0116\u0118\3\2\2\2\u0117\u0111\3\2\2\2\u0118\u011b\3\2\2\2\u0119\u0117"+
-		"\3\2\2\2\u0119\u011a\3\2\2\2\u011a\27\3\2\2\2\u011b\u0119\3\2\2\2\r\36"+
-		"u}\u0082\u0088\u00aa\u00dd\u00df\u00ed\u010b\u0119";
+		"\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3"+
+		"\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\5\4\u0089\n\4\3\5\7\5\u008c"+
+		"\n\5\f\5\16\5\u008f\13\5\3\5\3\5\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\7\3"+
+		"\7\3\7\3\7\3\7\3\7\5\7\u00a1\n\7\3\b\3\b\3\b\5\b\u00a6\n\b\3\t\3\t\3\t"+
+		"\3\t\5\t\u00ac\n\t\3\n\3\n\3\n\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13"+
+		"\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13"+
+		"\3\13\3\13\3\13\3\13\3\13\3\13\3\13\5\13\u00ce\n\13\3\13\3\13\3\13\3\13"+
+		"\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13"+
+		"\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13"+
+		"\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13"+
+		"\3\13\3\13\3\13\7\13\u0101\n\13\f\13\16\13\u0104\13\13\3\f\3\f\3\f\3\f"+
+		"\3\f\3\f\3\f\3\f\3\f\7\f\u010f\n\f\f\f\16\f\u0112\13\f\3\r\3\r\3\r\3\r"+
+		"\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3"+
+		"\r\3\r\3\r\3\r\3\r\3\r\5\r\u012f\n\r\3\16\3\16\3\16\3\16\3\16\3\16\3\16"+
+		"\3\16\3\16\3\16\7\16\u013b\n\16\f\16\16\16\u013e\13\16\3\16\2\5\24\26"+
+		"\32\17\2\4\6\b\n\f\16\20\22\24\26\30\32\2\b\3\2\f\r\3\2\n\13\3\2,-\3\2"+
+		"/\60\5\2%%(+..\3\2\678\2\u015b\2\34\3\2\2\2\4\"\3\2\2\2\6\u0088\3\2\2"+
+		"\2\b\u008d\3\2\2\2\n\u0092\3\2\2\2\f\u00a0\3\2\2\2\16\u00a5\3\2\2\2\20"+
+		"\u00ab\3\2\2\2\22\u00ad\3\2\2\2\24\u00cd\3\2\2\2\26\u0105\3\2\2\2\30\u012e"+
+		"\3\2\2\2\32\u0130\3\2\2\2\34\35\5\4\3\2\35\36\b\2\1\2\36\3\3\2\2\2\37"+
+		"!\5\6\4\2 \37\3\2\2\2!$\3\2\2\2\" \3\2\2\2\"#\3\2\2\2#%\3\2\2\2$\"\3\2"+
+		"\2\2%&\b\3\1\2&\5\3\2\2\2\'(\7\3\2\2()\7$\2\2)*\7\61\2\2*+\5\22\n\2+,"+
+		"\7\62\2\2,-\7!\2\2-.\b\4\1\2.\u0089\3\2\2\2/\60\7\4\2\2\60\61\7$\2\2\61"+
+		"\62\7\61\2\2\62\63\5\22\n\2\63\64\7\62\2\2\64\65\7!\2\2\65\66\b\4\1\2"+
+		"\66\u0089\3\2\2\2\678\7\16\2\289\5\16\b\29:\5\20\t\2:;\7\37\2\2;<\7#\2"+
+		"\2<=\5\f\7\2=>\7&\2\2>?\5\22\n\2?@\7!\2\2@A\b\4\1\2A\u0089\3\2\2\2BC\7"+
+		"\16\2\2CD\5\16\b\2DE\5\20\t\2EF\7\37\2\2FG\7&\2\2GH\5\22\n\2HI\7!\2\2"+
+		"IJ\b\4\1\2J\u0089\3\2\2\2KL\7\37\2\2LM\7&\2\2MN\5\22\n\2NO\7!\2\2OP\b"+
+		"\4\1\2P\u0089\3\2\2\2QR\7\7\2\2RS\5\22\n\2ST\7\63\2\2TU\5\4\3\2UV\7\64"+
+		"\2\2VW\b\4\1\2W\u0089\3\2\2\2XY\7\7\2\2YZ\5\22\n\2Z[\7\63\2\2[\\\5\4\3"+
+		"\2\\]\7\64\2\2]^\7\b\2\2^_\7\63\2\2_`\5\4\3\2`a\7\64\2\2ab\b\4\1\2b\u0089"+
+		"\3\2\2\2cd\7\7\2\2de\5\22\n\2ef\7\63\2\2fg\5\4\3\2gh\7\64\2\2hi\5\b\5"+
+		"\2ij\7\b\2\2jk\7\63\2\2kl\5\4\3\2lm\7\64\2\2mn\b\4\1\2n\u0089\3\2\2\2"+
+		"op\7\t\2\2pq\5\22\n\2qr\7\63\2\2rs\5\4\3\2st\7\64\2\2tu\b\4\1\2u\u0089"+
+		"\3\2\2\2vw\7\24\2\2wx\7\63\2\2xy\5\4\3\2yz\7\64\2\2z{\b\4\1\2{\u0089\3"+
+		"\2\2\2|}\7\31\2\2}~\7\37\2\2~\177\7\32\2\2\177\u0080\5\22\n\2\u0080\u0081"+
+		"\7\63\2\2\u0081\u0082\5\4\3\2\u0082\u0083\7\64\2\2\u0083\u0084\b\4\1\2"+
+		"\u0084\u0089\3\2\2\2\u0085\u0086\7\33\2\2\u0086\u0087\7!\2\2\u0087\u0089"+
+		"\b\4\1\2\u0088\'\3\2\2\2\u0088/\3\2\2\2\u0088\67\3\2\2\2\u0088B\3\2\2"+
+		"\2\u0088K\3\2\2\2\u0088Q\3\2\2\2\u0088X\3\2\2\2\u0088c\3\2\2\2\u0088o"+
+		"\3\2\2\2\u0088v\3\2\2\2\u0088|\3\2\2\2\u0088\u0085\3\2\2\2\u0089\7\3\2"+
+		"\2\2\u008a\u008c\5\n\6\2\u008b\u008a\3\2\2\2\u008c\u008f\3\2\2\2\u008d"+
+		"\u008b\3\2\2\2\u008d\u008e\3\2\2\2\u008e\u0090\3\2\2\2\u008f\u008d\3\2"+
+		"\2\2\u0090\u0091\b\5\1\2\u0091\t\3\2\2\2\u0092\u0093\7\b\2\2\u0093\u0094"+
+		"\7\7\2\2\u0094\u0095\5\22\n\2\u0095\u0096\7\63\2\2\u0096\u0097\5\4\3\2"+
+		"\u0097\u0098\7\64\2\2\u0098\u0099\b\6\1\2\u0099\13\3\2\2\2\u009a\u009b"+
+		"\7\r\2\2\u009b\u00a1\b\7\1\2\u009c\u009d\7\f\2\2\u009d\u00a1\b\7\1\2\u009e"+
+		"\u009f\7\6\2\2\u009f\u00a1\b\7\1\2\u00a0\u009a\3\2\2\2\u00a0\u009c\3\2"+
+		"\2\2\u00a0\u009e\3\2\2\2\u00a1\r\3\2\2\2\u00a2\u00a3\7\17\2\2\u00a3\u00a6"+
+		"\b\b\1\2\u00a4\u00a6\3\2\2\2\u00a5\u00a2\3\2\2\2\u00a5\u00a4\3\2\2\2\u00a6"+
+		"\17\3\2\2\2\u00a7\u00a8\7\65\2\2\u00a8\u00a9\7\66\2\2\u00a9\u00ac\b\t"+
+		"\1\2\u00aa\u00ac\3\2\2\2\u00ab\u00a7\3\2\2\2\u00ab\u00aa\3\2\2\2\u00ac"+
+		"\21\3\2\2\2\u00ad\u00ae\5\24\13\2\u00ae\u00af\b\n\1\2\u00af\23\3\2\2\2"+
+		"\u00b0\u00b1\b\13\1\2\u00b1\u00b2\t\2\2\2\u00b2\u00b3\7#\2\2\u00b3\u00b4"+
+		"\7#\2\2\u00b4\u00b5\t\3\2\2\u00b5\u00b6\7\61\2\2\u00b6\u00b7\5\24\13\2"+
+		"\u00b7\u00b8\7\"\2\2\u00b8\u00b9\5\24\13\2\u00b9\u00ba\7\62\2\2\u00ba"+
+		"\u00bb\b\13\1\2\u00bb\u00ce\3\2\2\2\u00bc\u00bd\7$\2\2\u00bd\u00be\5\24"+
+		"\13\n\u00be\u00bf\b\13\1\2\u00bf\u00ce\3\2\2\2\u00c0\u00c1\7\65\2\2\u00c1"+
+		"\u00c2\5\26\f\2\u00c2\u00c3\7\66\2\2\u00c3\u00c4\b\13\1\2\u00c4\u00ce"+
+		"\3\2\2\2\u00c5\u00c6\5\30\r\2\u00c6\u00c7\b\13\1\2\u00c7\u00ce\3\2\2\2"+
+		"\u00c8\u00c9\7\61\2\2\u00c9\u00ca\5\22\n\2\u00ca\u00cb\7\62\2\2\u00cb"+
+		"\u00cc\b\13\1\2\u00cc\u00ce\3\2\2\2\u00cd\u00b0\3\2\2\2\u00cd\u00bc\3"+
+		"\2\2\2\u00cd\u00c0\3\2\2\2\u00cd\u00c5\3\2\2\2\u00cd\u00c8\3\2\2\2\u00ce"+
+		"\u0102\3\2\2\2\u00cf\u00d0\f\20\2\2\u00d0\u00d1\t\4\2\2\u00d1\u00d2\5"+
+		"\24\13\21\u00d2\u00d3\b\13\1\2\u00d3\u0101\3\2\2\2\u00d4\u00d5\f\17\2"+
+		"\2\u00d5\u00d6\t\5\2\2\u00d6\u00d7\5\24\13\20\u00d7\u00d8\b\13\1\2\u00d8"+
+		"\u0101\3\2\2\2\u00d9\u00da\f\r\2\2\u00da\u00db\t\6\2\2\u00db\u00dc\5\24"+
+		"\13\16\u00dc\u00dd\b\13\1\2\u00dd\u0101\3\2\2\2\u00de\u00df\f\f\2\2\u00df"+
+		"\u00e0\7\'\2\2\u00e0\u00e1\5\24\13\r\u00e1\u00e2\b\13\1\2\u00e2\u0101"+
+		"\3\2\2\2\u00e3\u00e4\f\13\2\2\u00e4\u00e5\t\7\2\2\u00e5\u00e6\5\24\13"+
+		"\f\u00e6\u00e7\b\13\1\2\u00e7\u0101\3\2\2\2\u00e8\u00e9\f\t\2\2\u00e9"+
+		"\u00ea\7 \2\2\u00ea\u00eb\7\25\2\2\u00eb\u00ec\7\61\2\2\u00ec\u00ed\7"+
+		"\62\2\2\u00ed\u0101\b\13\1\2\u00ee\u00ef\f\b\2\2\u00ef\u00f0\7 \2\2\u00f0"+
+		"\u00f1\7\26\2\2\u00f1\u00f2\7\61\2\2\u00f2\u00f3\7\62\2\2\u00f3\u0101"+
+		"\b\13\1\2\u00f4\u00f5\f\7\2\2\u00f5\u00f6\7 \2\2\u00f6\u00f7\7\27\2\2"+
+		"\u00f7\u00f8\7\61\2\2\u00f8\u00f9\7\62\2\2\u00f9\u0101\b\13\1\2\u00fa"+
+		"\u00fb\f\6\2\2\u00fb\u00fc\7 \2\2\u00fc\u00fd\7\30\2\2\u00fd\u00fe\7\61"+
+		"\2\2\u00fe\u00ff\7\62\2\2\u00ff\u0101\b\13\1\2\u0100\u00cf\3\2\2\2\u0100"+
+		"\u00d4\3\2\2\2\u0100\u00d9\3\2\2\2\u0100\u00de\3\2\2\2\u0100\u00e3\3\2"+
+		"\2\2\u0100\u00e8\3\2\2\2\u0100\u00ee\3\2\2\2\u0100\u00f4\3\2\2\2\u0100"+
+		"\u00fa\3\2\2\2\u0101\u0104\3\2\2\2\u0102\u0100\3\2\2\2\u0102\u0103\3\2"+
+		"\2\2\u0103\25\3\2\2\2\u0104\u0102\3\2\2\2\u0105\u0106\b\f\1\2\u0106\u0107"+
+		"\5\22\n\2\u0107\u0108\b\f\1\2\u0108\u0110\3\2\2\2\u0109\u010a\f\4\2\2"+
+		"\u010a\u010b\7\"\2\2\u010b\u010c\5\22\n\2\u010c\u010d\b\f\1\2\u010d\u010f"+
+		"\3\2\2\2\u010e\u0109\3\2\2\2\u010f\u0112\3\2\2\2\u0110\u010e\3\2\2\2\u0110"+
+		"\u0111\3\2\2\2\u0111\27\3\2\2\2\u0112\u0110\3\2\2\2\u0113\u0114\7\34\2"+
+		"\2\u0114\u012f\b\r\1\2\u0115\u0116\7\60\2\2\u0116\u0117\7\34\2\2\u0117"+
+		"\u012f\b\r\1\2\u0118\u0119\7\60\2\2\u0119\u011a\7\35\2\2\u011a\u012f\b"+
+		"\r\1\2\u011b\u011c\7\36\2\2\u011c\u012f\b\r\1\2\u011d\u011e\7\35\2\2\u011e"+
+		"\u012f\b\r\1\2\u011f\u0120\7\35\2\2\u0120\u0121\7\20\2\2\u0121\u0122\7"+
+		"\f\2\2\u0122\u012f\b\r\1\2\u0123\u0124\7\34\2\2\u0124\u0125\7\20\2\2\u0125"+
+		"\u0126\7\r\2\2\u0126\u012f\b\r\1\2\u0127\u0128\5\32\16\2\u0128\u0129\b"+
+		"\r\1\2\u0129\u012f\3\2\2\2\u012a\u012b\7\21\2\2\u012b\u012f\b\r\1\2\u012c"+
+		"\u012d\7\22\2\2\u012d\u012f\b\r\1\2\u012e\u0113\3\2\2\2\u012e\u0115\3"+
+		"\2\2\2\u012e\u0118\3\2\2\2\u012e\u011b\3\2\2\2\u012e\u011d\3\2\2\2\u012e"+
+		"\u011f\3\2\2\2\u012e\u0123\3\2\2\2\u012e\u0127\3\2\2\2\u012e\u012a\3\2"+
+		"\2\2\u012e\u012c\3\2\2\2\u012f\31\3\2\2\2\u0130\u0131\b\16\1\2\u0131\u0132"+
+		"\7\37\2\2\u0132\u0133\b\16\1\2\u0133\u013c\3\2\2\2\u0134\u0135\f\4\2\2"+
+		"\u0135\u0136\7\65\2\2\u0136\u0137\5\22\n\2\u0137\u0138\7\66\2\2\u0138"+
+		"\u0139\b\16\1\2\u0139\u013b\3\2\2\2\u013a\u0134\3\2\2\2\u013b\u013e\3"+
+		"\2\2\2\u013c\u013a\3\2\2\2\u013c\u013d\3\2\2\2\u013d\33\3\2\2\2\u013e"+
+		"\u013c\3\2\2\2\16\"\u0088\u008d\u00a0\u00a5\u00ab\u00cd\u0100\u0102\u0110"+
+		"\u012e\u013c";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

@@ -39,6 +39,18 @@ func (s *BaseChemsListener) EnterInstruccion(ctx *InstruccionContext) {}
 // ExitInstruccion is called when production instruccion is exited.
 func (s *BaseChemsListener) ExitInstruccion(ctx *InstruccionContext) {}
 
+// EnterListaelseif is called when production listaelseif is entered.
+func (s *BaseChemsListener) EnterListaelseif(ctx *ListaelseifContext) {}
+
+// ExitListaelseif is called when production listaelseif is exited.
+func (s *BaseChemsListener) ExitListaelseif(ctx *ListaelseifContext) {}
+
+// EnterElse_if is called when production else_if is entered.
+func (s *BaseChemsListener) EnterElse_if(ctx *Else_ifContext) {}
+
+// ExitElse_if is called when production else_if is exited.
+func (s *BaseChemsListener) ExitElse_if(ctx *Else_ifContext) {}
+
 // EnterTipo is called when production tipo is entered.
 func (s *BaseChemsListener) EnterTipo(ctx *TipoContext) {}
 
