@@ -1,7 +1,6 @@
 package instruction
 
 import (
-	"fmt"
 	"proyecto1/interfaces"
 )
 
@@ -18,6 +17,6 @@ func NewBreak(condition interfaces.TipoExpresion, line int, columna int) Break {
 }
 
 func (p Break) Ejecutar(env interface{}) interface{} {
-	fmt.Println("sda")
+
 	return p.Expresion
 }

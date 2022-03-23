@@ -13,4 +13,7 @@ const (
 	FALSE
 	NULL
 	BREAK
+	CONTINUE
+	VECTOR
+	PUSH
 )

@@ -1,7 +1,6 @@
 package instruction
 
 import (
-	"fmt"
 	"proyecto1/environment"
 	"proyecto1/interfaces"
 
@@ -25,14 +24,17 @@ func (p Loop) Ejecutar(env interface{}) interface{} {
 	tmpEnv = environment.NewEnvironment(env.(environment.Environment))
 
 	for {
-		fmt.Println(p.Bloque.ToArray())
 		for _, s := range p.Bloque.ToArray() {
 
-			s.(interfaces.Instruction).Ejecutar(tmpEnv)
-		}
-		fmt.Println(result.Valor)
-		if result.Valor == true {
-			break
+			result := s.(interfaces.Instruction).Ejecutar(tmpEnv)
+			if result == interfaces.BREAK {
+				// continue == break
+				return interfaces.BREAK
+			}
+			if result == interfaces.CONTINUE {
+				// continue == break
+				break
+			}
 		}
 
 	}

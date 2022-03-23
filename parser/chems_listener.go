@@ -29,6 +29,9 @@ type ChemsListener interface {
 	// EnterMut is called when entering the mut production.
 	EnterMut(c *MutContext)
 
+	// EnterVector_st is called when entering the vector_st production.
+	EnterVector_st(c *Vector_stContext)
+
 	// EnterArray_st is called when entering the array_st production.
 	EnterArray_st(c *Array_stContext)
 
@@ -67,6 +70,9 @@ type ChemsListener interface {
 
 	// ExitMut is called when exiting the mut production.
 	ExitMut(c *MutContext)
+
+	// ExitVector_st is called when exiting the vector_st production.
+	ExitVector_st(c *Vector_stContext)
 
 	// ExitArray_st is called when exiting the array_st production.
 	ExitArray_st(c *Array_stContext)

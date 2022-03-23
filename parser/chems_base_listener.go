@@ -63,6 +63,12 @@ func (s *BaseChemsListener) EnterMut(ctx *MutContext) {}
 // ExitMut is called when production mut is exited.
 func (s *BaseChemsListener) ExitMut(ctx *MutContext) {}
 
+// EnterVector_st is called when production vector_st is entered.
+func (s *BaseChemsListener) EnterVector_st(ctx *Vector_stContext) {}
+
+// ExitVector_st is called when production vector_st is exited.
+func (s *BaseChemsListener) ExitVector_st(ctx *Vector_stContext) {}
+
 // EnterArray_st is called when production array_st is entered.
 func (s *BaseChemsListener) EnterArray_st(ctx *Array_stContext) {}
 

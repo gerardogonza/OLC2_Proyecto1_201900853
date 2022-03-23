@@ -19,23 +19,32 @@ func NewForin(condition string, condition2 interfaces.Expresion, bloque *arrayLi
 	return forinInstr
 }
 
+type temporal struct {
+	Tipo    interfaces.Expresion
+	Mutable bool
+}
+
 func (p Forin) Ejecutar(env interface{}) interface{} {
 
 	var result2 interfaces.Symbol
 	result2 = p.Expresion2.Ejecutar(env)
 
 	if result2.Tipo == interfaces.STRING {
-
+		env.(environment.Environment).SaveVariable(p.id, interfaces.Symbol{Tipo: interfaces.STRING, Muteable: true, Valor: ""}, interfaces.STRING, true)
 		for _, nombre := range result2.Valor.(string) {
 			asciiValue := nombre
 			character := string(asciiValue)
 
-			env.(environment.Environment).AlterVariable(p.id, interfaces.Symbol{Tipo: interfaces.STRING, Muteable: false, Valor: character})
+			env.(environment.Environment).AlterVariable(p.id, interfaces.Symbol{Tipo: interfaces.STRING, Muteable: true, Valor: character})
 			var tmpEnv environment.Environment
 			tmpEnv = environment.NewEnvironment(env.(environment.Environment))
 			for _, s := range p.Bloque.ToArray() {
 
-				s.(interfaces.Instruction).Ejecutar(tmpEnv)
+				result := s.(interfaces.Instruction).Ejecutar(tmpEnv)
+				if result == interfaces.BREAK {
+					// continue == break
+					return interfaces.BREAK
+				}
 			}
 		}
 	}
@@ -43,7 +52,7 @@ func (p Forin) Ejecutar(env interface{}) interface{} {
 
 		var tempArray interfaces.Symbol
 		tempArray = p.Expresion2.Ejecutar(env)
-
+		env.(environment.Environment).SaveVariable(p.id, interfaces.Symbol{Tipo: interfaces.STRING, Muteable: true, Valor: ""}, interfaces.STRING, true)
 		if tempArray.Tipo == interfaces.ARRAY {
 
 			var tempValue interface{}
@@ -52,15 +61,20 @@ func (p Forin) Ejecutar(env interface{}) interface{} {
 			i := 0
 			for _, nombre := range tempValue.(*arrayList.List).ToArray() {
 				character := tempValue.(*arrayList.List).GetValue(i).(interfaces.Symbol).Valor
-				fmt.Print(nombre)
+				fmt.Print(nombre) //si lo quito peta
 				i++
-				env.(environment.Environment).AlterVariable(p.id, interfaces.Symbol{Tipo: interfaces.STRING, Muteable: false, Valor: character})
+				env.(environment.Environment).AlterVariable(p.id, interfaces.Symbol{Tipo: interfaces.STRING, Muteable: true, Valor: character})
 				var tmpEnv environment.Environment
 				tmpEnv = environment.NewEnvironment(env.(environment.Environment))
 				for _, s := range p.Bloque.ToArray() {
 
-					s.(interfaces.Instruction).Ejecutar(tmpEnv)
+					result := s.(interfaces.Instruction).Ejecutar(tmpEnv)
+					if result == interfaces.BREAK {
+						// continue == break
+						return interfaces.BREAK
+					}
 				}
+
 			}
 
 			return tempValue.(*arrayList.List).GetValue(0).(interfaces.Symbol)

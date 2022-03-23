@@ -34,8 +34,15 @@ instrucciones returns [*arrayList.List l]
 instruccion returns [interfaces.Instruction instr]
   :PRINTLN DIFERENTE PARIZQ  expression PARDER ';' {$instr = instruction.NewImprimir($expression.p,false)}
   |PRINT DIFERENTE PARIZQ  expression PARDER ';' {$instr = instruction.NewImprimir($expression.p,true)}
-  | P_LET muteable=mut isArray=array_st id=ID DOSPUNTOS isTipo=tipo IGUAL expression ';'{$instr = instruction.NewDeclaration($id.text,$isTipo.p,$expression.p, $isArray.arr,$muteable.arr,$expression.start.GetLine(),$expression.start.GetColumn())	}
-  | P_LET muteable=mut isArray=array_st id=ID IGUAL expression ';'{$instr = instruction.NewDeclaration($id.text,interfaces.NULL,$expression.p, $isArray.arr,$muteable.arr,$expression.start.GetLine(),$expression.start.GetColumn())	}
+  | P_LET muteable=mut isArray=array_st id=ID DOSPUNTOS isTipo=tipo IGUAL expression ';'{$instr = instruction.NewDeclaration($id.text,$isTipo.p,$expression.p, $isArray.arr,$muteable.arr,$expression.start.GetLine(),$expression.start.GetColumn(),0,false)	}
+  | P_LET muteable=mut isArray=array_st id=ID IGUAL expression ';'{$instr = instruction.NewDeclaration($id.text,interfaces.NULL,$expression.p, $isArray.arr,$muteable.arr,$expression.start.GetLine(),$expression.start.GetColumn(),0,false)	}
+  | P_LET muteable=mut isArray=array_st id=ID IGUAL isvector=vector_st expression ';'{$instr = instruction.NewDeclaration($id.text,interfaces.NULL,$expression.p, $isArray.arr,$muteable.arr,$expression.start.GetLine(),$expression.start.GetColumn(),0,$isvector.arr)	}
+  | P_LET muteable=mut id=ID DOSPUNTOS CORIZQ isTipo=tipo ';' NUMBER CORDER IGUAL ex1=expression ';'{	
+      num,err := strconv.Atoi($NUMBER.text)
+                if err!= nil{
+                    fmt.Println(err)
+                }
+     $instr = instruction.NewDeclaration($id.text,$isTipo.p,$ex1.p, true,$muteable.arr,$ex1.start.GetLine(),$ex1.start.GetColumn(),num,false)	}
   | id=ID '=' expression ';'{$instr = instruction.NewAssignment($id.text,$expression.p)}
   | P_IF expression LLAVEIZQ instrucciones LLAVEDER  {$instr = instruction.NewIf($expression.p, $instrucciones.l,nil,nil)}
   | P_IF expression LLAVEIZQ i1=instrucciones LLAVEDER P_ELSE LLAVEIZQ i2=instrucciones LLAVEDER {$instr = instruction.NewIf($expression.p, $i1.l,nil,$i2.l)}
@@ -44,6 +51,8 @@ instruccion returns [interfaces.Instruction instr]
   | P_LOOP LLAVEIZQ instrucciones LLAVEDER  {$instr = instruction.NewLoop($instrucciones.l)}        
   | P_FOR id=ID  P_IN f2=expression LLAVEIZQ instrucciones LLAVEDER  {$instr = instruction.NewForin($id.text,$f2.p,$instrucciones.l)}                                                                
   | P_BREAK  ';' {$instr = instruction.NewBreak(interfaces.BREAK,$P_BREAK.line,$P_BREAK.pos)}                                                   
+  | P_CONTINUE ';'{$instr = instruction.NewContinue(interfaces.CONTINUE,$P_CONTINUE.line,$P_CONTINUE.pos)}                                                                                                                                                                                      
+  |id=ID PUNTO P_PUSH PARIZQ expression PARDER';'{$instr = expresion.NewVectorNative($id.text,interfaces.PUSH,$expression.p)}                                                                                                                                                                                      
 ; 
 listaelseif returns [*arrayList.List lista]
 @init{ $lista = arrayList.New()}
@@ -62,12 +71,16 @@ tipo returns[interfaces.TipoExpresion p]
 :P_F64{$p=interfaces.FLOAT}
 |P_I64{$p=interfaces.INTEGER}
 |P_STRING{$p=interfaces.STRING}
+|P_STRING2{$p=interfaces.STRING}
 ;
 mut returns [bool arr]
 :P_MUT { $arr = true }
 |
 ;
-
+vector_st returns [bool arr]
+   : P_VECTOR DIFERENTE { $arr = true }
+   |
+;
 array_st returns [bool arr]
    : CORIZQ CORDER { $arr = true }
    |
@@ -89,7 +102,8 @@ expr_arit returns[interfaces.Expresion p]
     | opIz = expr_arit PUNTO op=P_SQRT PARIZQ PARDER {$p = expresion.NewNativas($opIz.p,$op.text,$opIz.start.GetLine(),$opIz.start.GetColumn())}   
     | opIz = expr_arit PUNTO op=P_TOSTRING PARIZQ PARDER {$p = expresion.NewNativas($opIz.p,$op.text,$opIz.start.GetLine(),$opIz.start.GetColumn())}   
     | opIz = expr_arit PUNTO op=P_CLONE PARIZQ PARDER {$p = expresion.NewNativas($opIz.p,$op.text,$opIz.start.GetLine(),$opIz.start.GetColumn())}   
-    | CORIZQ listValues CORDER { $p = expresion.NewArray($listValues.l) }
+    | CORIZQ listValues CORDER { $p = expresion.NewArray($listValues.l,nil) }
+    | CORIZQ listValues ';' expr_arit CORDER { $p = expresion.NewArray($listValues.l,$expr_arit.p) }
     | primitivo {$p = $primitivo.p} 
     | PARIZQ expression PARDER {$p = $expression.p}
    
