@@ -52,7 +52,10 @@ instruccion returns [interfaces.Instruction instr]
   | P_FOR id=ID  P_IN f2=expression LLAVEIZQ instrucciones LLAVEDER  {$instr = instruction.NewForin($id.text,$f2.p,$instrucciones.l)}                                                                
   | P_BREAK  ';' {$instr = instruction.NewBreak(interfaces.BREAK,$P_BREAK.line,$P_BREAK.pos)}                                                   
   | P_CONTINUE ';'{$instr = instruction.NewContinue(interfaces.CONTINUE,$P_CONTINUE.line,$P_CONTINUE.pos)}                                                                                                                                                                                      
-  |id=ID PUNTO P_PUSH PARIZQ expression PARDER';'{$instr = expresion.NewVectorNative($id.text,interfaces.PUSH,$expression.p)}                                                                                                                                                                                      
+  |id1=expression PUNTO P_PUSH PARIZQ gola=expression PARDER';'{$instr = expresion.NewVectorNative($id1.p,interfaces.PUSH,$gola.p,nil)}                                                                                                                                                                                      
+  |id1=expression PUNTO P_INSERT PARIZQ pos=expression ',' gola=expression PARDER';'{$instr = expresion.NewVectorNative($id1.p,interfaces.INSERT,$gola.p,$pos.p)}                                                                                                                                                                                      
+  |id1=expression PUNTO P_REMOVE PARIZQ pos=expression  PARDER';'{$instr = expresion.NewVectorNative($id1.p,interfaces.REMOVE,nil,$pos.p)}  
+  |id1=expression PUNTO P_LEN PARIZQ PARDER {$instr = expresion.NewVectorNative($id1.p,interfaces.LEN,nil,nil)}                                                                                                                                                                                                                                                                                                                                                                        
 ; 
 listaelseif returns [*arrayList.List lista]
 @init{ $lista = arrayList.New()}
@@ -105,7 +108,7 @@ expr_arit returns[interfaces.Expresion p]
     | CORIZQ listValues CORDER { $p = expresion.NewArray($listValues.l,nil) }
     | CORIZQ listValues ';' expr_arit CORDER { $p = expresion.NewArray($listValues.l,$expr_arit.p) }
     | primitivo {$p = $primitivo.p} 
-    | PARIZQ expression PARDER {$p = $expression.p}
+    | PARIZQ expression PARDER {$p = $expression.p}  
    
 ;
 

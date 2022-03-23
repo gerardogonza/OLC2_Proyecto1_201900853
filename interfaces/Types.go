@@ -16,4 +16,7 @@ const (
 	CONTINUE
 	VECTOR
 	PUSH
+	INSERT
+	REMOVE
+	LEN
 )

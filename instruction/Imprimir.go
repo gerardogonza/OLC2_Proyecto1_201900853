@@ -47,7 +47,7 @@ func (p Imprimir) Ejecutar(env interface{}) interface{} {
 		i := 0
 		CodigoEntrada.Salida += "["
 		for _, nombre := range tempValue.(*arrayList.List).ToArray() {
-			fmt.Println(nombre)
+			fmt.Print(nombre)
 			character := tempValue.(*arrayList.List).GetValue(i).(interfaces.Symbol).Valor
 			size := tempValue.(*arrayList.List).Len()
 			if p.Tipo == false {
