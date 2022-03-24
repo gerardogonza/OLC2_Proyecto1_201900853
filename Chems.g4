@@ -22,7 +22,7 @@ instrucciones returns [*arrayList.List l]
   @init{
     $l =  arrayList.New()
   }
-  : e +=instruccion*  {
+  : e += instruccion*  {
       listInt := localctx.(*InstruccionesContext).GetE()
       		for _, e := range listInt {
             $l.Add(e.GetInstr())
@@ -105,6 +105,7 @@ expr_arit returns[interfaces.Expresion p]
     | opIz = expr_arit PUNTO op=P_SQRT PARIZQ PARDER {$p = expresion.NewNativas($opIz.p,$op.text,$opIz.start.GetLine(),$opIz.start.GetColumn())}   
     | opIz = expr_arit PUNTO op=P_TOSTRING PARIZQ PARDER {$p = expresion.NewNativas($opIz.p,$op.text,$opIz.start.GetLine(),$opIz.start.GetColumn())}   
     | opIz = expr_arit PUNTO op=P_CLONE PARIZQ PARDER {$p = expresion.NewNativas($opIz.p,$op.text,$opIz.start.GetLine(),$opIz.start.GetColumn())}   
+    |opIz=expr_arit PUNTO op=P_LEN PARIZQ PARDER {$p = expresion.NewNativas($opIz.p,$op.text,$opIz.start.GetLine(),$opIz.start.GetColumn())}      
     | CORIZQ listValues CORDER { $p = expresion.NewArray($listValues.l,nil) }
     | CORIZQ listValues ';' expr_arit CORDER { $p = expresion.NewArray($listValues.l,$expr_arit.p) }
     | primitivo {$p = $primitivo.p} 

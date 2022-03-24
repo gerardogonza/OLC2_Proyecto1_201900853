@@ -39,6 +39,8 @@ P_LEN:               'len';
 P_CAPACITY:               'capacity';
 P_NEW:               'new';
 P_WITHCAPACITY:               'with_capacity';
+P_MAIN:               'main';
+P_fn:               'fn';
 
 NUMBER: [0-9]+;
 DECIMAL: [0-9]+'.'[0-9]+;

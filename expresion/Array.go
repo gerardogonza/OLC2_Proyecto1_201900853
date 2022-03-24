@@ -30,6 +30,7 @@ func (p Array) Ejecutar(env interface{}) interfaces.Symbol {
 		for _, s := range p.ListExp.ToArray() {
 			for i := 0; i < retornoDer.Valor.(int); i++ {
 				tempExp.Add(s.(interfaces.Expresion).Ejecutar(env))
+
 			}
 			break
 		}

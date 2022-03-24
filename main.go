@@ -81,16 +81,17 @@ func Ejecutar(w http.ResponseWriter, r *http.Request) {
 	}
 	instruction.CodigoEntrada.Entrada = r.FormValue("name")
 	t, err := template.ParseFiles("frontend/index.html")
-	if err != nil {
 
-		fmt.Println("Hay un error en HTML")
-		fmt.Println(err)
-	}
 	instruction.CodigoEntrada.Salida = ""
 	EjecutarGramatica(instruction.CodigoEntrada.Entrada)
 
 	// fmt.Print(CodigoEntrada.Entrada)
 	t.Execute(w, instruction.CodigoEntrada)
+	if err != nil {
+
+		fmt.Println("Hay un error en HTML")
+		fmt.Println(err)
+	}
 }
 
 func EjecutarGramatica(entrada string) {
@@ -113,13 +114,10 @@ func EjecutarGramatica(entrada string) {
 	// Create the Lexer
 	lexer := parser.NewChemsLexer(is)
 	stream := antlr.NewCommonTokenStream(lexer, antlr.TokenDefaultChannel)
-
 	// Create the Parser
 	p := parser.NewChems(stream)
-
 	p.BuildParseTrees = true
 	tree := p.Start()
-
 	antlr.ParseTreeWalkerDefault.Walk(NewTreeShapeListener(), tree)
 
 }

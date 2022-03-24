@@ -6,6 +6,7 @@ import (
 	"proyecto1/instruction"
 	"proyecto1/interfaces"
 
+	arrayList "github.com/colegno/arraylist"
 	"github.com/vigneshuvi/GoDateFormat"
 )
 
@@ -85,7 +86,7 @@ func (p Nativas) Ejecutar(env interface{}) interfaces.Symbol {
 	case "to_string":
 		{
 
-			return interfaces.Symbol{Id: "", Tipo: interfaces.FLOAT, Valor: fmt.Sprintln(retornoIzq.Valor)}
+			return interfaces.Symbol{Id: "", Tipo: interfaces.FLOAT, Valor: fmt.Sprint(retornoIzq.Valor)}
 
 		}
 	case "clone":
@@ -98,6 +99,15 @@ func (p Nativas) Ejecutar(env interface{}) interfaces.Symbol {
 			} else {
 				fmt.Println("Error no es valor admitido para valor abs debe ser INT o FLOAT")
 			}
+		}
+	case "len":
+		{
+			var result interfaces.Symbol
+			result = p.Op1.Ejecutar(env)
+			var tempValue interface{}
+			tempValue = result.Valor
+			return interfaces.Symbol{Id: "", Tipo: interfaces.INTEGER, Valor: tempValue.(*arrayList.List).Len()}
+
 		}
 	}
 	return interfaces.Symbol{Id: "", Tipo: interfaces.INTEGER, Valor: resultado}

@@ -26,6 +26,7 @@ func (p ArrayAccess) Ejecutar(env interface{}) interfaces.Symbol {
 
 		var tempValue interface{}
 		tempValue = tempArray.Valor
+
 		return tempValue.(*arrayList.List).GetValue(tempIndex.Valor.(int)).(interfaces.Symbol)
 	}
 
