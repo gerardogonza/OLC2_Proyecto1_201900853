@@ -2,11 +2,18 @@ package instruction
 
 import (
 	"fmt"
+	"proyecto1/generator"
 	"proyecto1/interfaces"
-	"time"
-
-	arrayList "github.com/colegno/arraylist"
 )
+
+type Imprimir struct {
+	Expresion interfaces.Expresion
+}
+
+func NewImprimir(val interfaces.Expresion) Imprimir {
+	exp := Imprimir{val}
+	return exp
+}
 
 type Codigo struct {
 	Entrada string
@@ -20,64 +27,43 @@ type Error struct {
 	Fecha   string
 }
 
-func GetToday(format string) (todayString string) {
-	today := time.Now()
-	todayString = today.Format(format)
-	return
-}
-
 var CodigoEntrada Codigo
 
-type Imprimir struct {
-	Expresion interfaces.Expresion
-	Tipo      bool
-}
+func (p Imprimir) Ejecutar(env interface{}, gen *generator.Generator) interface{} {
 
-func NewImprimir(val interfaces.Expresion, tipo bool) Imprimir {
-	exp := Imprimir{val, tipo}
-	return exp
-}
+	var result interfaces.Value
 
-func (p Imprimir) Ejecutar(env interface{}) interface{} {
-	var result interfaces.Symbol
-	result = p.Expresion.Ejecutar(env)
-	if result.Tipo == interfaces.ARRAY {
-		var tempValue interface{}
-		tempValue = result.Valor
-		i := 0
-		CodigoEntrada.Salida += "["
-		for _, nombre := range tempValue.(*arrayList.List).ToArray() {
-			fmt.Print(nombre)
-			character := tempValue.(*arrayList.List).GetValue(i).(interfaces.Symbol).Valor
-			size := tempValue.(*arrayList.List).Len()
-			if p.Tipo == false {
-				if i+1 == size {
-					CodigoEntrada.Salida += fmt.Sprintln(character)
-				} else {
+	result = p.Expresion.Ejecutar(env, gen)
 
-					CodigoEntrada.Salida += fmt.Sprintln(character) + ","
-				}
+	if result.Type == interfaces.BOOLEAN {
+		newLabel := gen.NewLabel()
+		gen.AddLabel(result.TrueLabel)
+		gen.PrintTrue()
+		gen.AddGoto(newLabel)
+		gen.AddLabel(result.FalseLabel)
+		gen.PrintFalse()
+		gen.AddLabel(newLabel)
 
-			} else {
-				if i+1 == size {
-					CodigoEntrada.Salida += fmt.Sprint(character)
-				} else {
-
-					CodigoEntrada.Salida += fmt.Sprint(character) + ","
-				}
-
-			}
-			i++
-		}
-		CodigoEntrada.Salida += "]"
+	} else if result.Type == interfaces.STRING {
+		newTemp := gen.NewTemp()
+		gen.AddExpression(newTemp, "H", "", "")
+		gen.ExpresionLiteral("H", fmt.Sprintf(result.Value), newTemp)
+		newTemp1 := gen.NewTemp()
+		gen.AddExpression(newTemp1, "H", "2", "-")
+		gen.GetHeap(newTemp1, newTemp1)
+		newLabel := gen.NewLabel()
+		newLabel1 := gen.NewLabel()
+		gen.AddLabel(newLabel1)
+		newTemp2 := gen.NewTemp()
+		gen.GetHeap(newTemp2, newTemp1)
+		gen.AddIf(newTemp2, "-1", "==", newLabel)
+		gen.AddPrintf("c", "(int)"+fmt.Sprintf("%v", newTemp2))
+		gen.AddExpression(newTemp1, newTemp1, "1", "+")
+		gen.AddGoto(newLabel1)
+		gen.AddLabel(newLabel)
 	} else {
-		if p.Tipo == false {
-			CodigoEntrada.Salida += fmt.Sprintln(result.Valor)
-		} else {
-			CodigoEntrada.Salida += fmt.Sprint(result.Valor)
-		}
-
+		gen.AddPrintf("d", "(int)"+fmt.Sprintf("%v", result.Value))
 	}
 
-	return result.Valor
+	return result.Value
 }

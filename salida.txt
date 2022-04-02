@@ -1,0 +1,15 @@
+#include <stdio.h>
+#include <math.h>
+double HEAP[82000];
+double STACK[82000];
+double P;
+double H;
+double t0;
+
+
+void main(){
+t0 = 10 + 10;
+printf("%d",(int)t0);
+
+return;
+}
