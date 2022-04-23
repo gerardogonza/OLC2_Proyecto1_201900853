@@ -1,25 +1,16 @@
 package interfaces
 
-import "proyecto1/generator"
-
 type Symbol struct {
 	Id       string
 	Tipo     TipoExpresion
-	Posicion int
-}
-
-type Value struct {
-	Value      string
-	IsTemp     bool
-	Type       TipoExpresion
-	TrueLabel  string
-	FalseLabel string
+	Muteable bool
+	Valor    interface{}
 }
 
 type Expresion interface {
-	Ejecutar(env interface{}, gen *generator.Generator) Value
+	Ejecutar(env interface{}) Symbol
 }
 
 type Instruction interface {
-	Ejecutar(env interface{}, gen *generator.Generator) interface{}
+	Ejecutar(env interface{}) interface{}
 }

@@ -5,7 +5,6 @@ import (
 	"html/template"
 	"net/http"
 	"proyecto1/environment"
-	"proyecto1/generator"
 	"proyecto1/instruction"
 	"proyecto1/interfaces"
 	"proyecto1/parser"
@@ -27,38 +26,10 @@ func (this *TreeShapeListener) ExitStart(ctx *parser.StartContext) {
 	var globalEnv environment.Environment
 	globalEnv = environment.NewEnvironment(nil)
 
-	var gen *generator.Generator
-	gen = generator.NewGenerator()
-
 	for _, s := range result.ToArray() {
-		s.(interfaces.Instruction).Ejecutar(globalEnv, gen)
+
+		s.(interfaces.Instruction).Ejecutar(globalEnv)
 	}
-
-	instruction.CodigoEntrada.Salida += "#include <stdio.h>\n"
-	instruction.CodigoEntrada.Salida += "#include <math.h>\n"
-	instruction.CodigoEntrada.Salida += "double HEAP[82000];\n"
-	instruction.CodigoEntrada.Salida += "double STACK[82000];\n"
-	instruction.CodigoEntrada.Salida += "double P;\n"
-	instruction.CodigoEntrada.Salida += "double H;\n"
-	instruction.CodigoEntrada.Salida += "double "
-
-	instruction.CodigoEntrada.Salida += fmt.Sprintf("%v", gen.GetTemps().GetValue(0))
-	gen.GetTemps().RemoveAtIndex(0)
-
-	for _, s := range gen.GetTemps().ToArray() {
-		instruction.CodigoEntrada.Salida += ", "
-		instruction.CodigoEntrada.Salida += fmt.Sprintf("%v", s)
-	}
-
-	instruction.CodigoEntrada.Salida += ";\n\n"
-	instruction.CodigoEntrada.Salida += "\nvoid main(){\n"
-
-	for _, s := range gen.GetCode().ToArray() {
-		instruction.CodigoEntrada.Salida += fmt.Sprintf("%v", s)
-		instruction.CodigoEntrada.Salida += "\n"
-	}
-
-	instruction.CodigoEntrada.Salida += "\nreturn;\n}\n"
 
 }
 
@@ -94,6 +65,16 @@ func Reportes(w http.ResponseWriter, r *http.Request) {
 }
 
 func Ejecutar(w http.ResponseWriter, r *http.Request) {
+	// if err := r.ParseForm(); err != nil {
+	// 	fmt.Fprintf(w, "ParseForm() err: %v", err)
+	// 	return
+	// }
+	// fmt.Fprintf(w, "Post from website! r.PostFrom = %v\n", r.PostForm)
+	// name := r.FormValue("name")
+	// CodigoEntrada.Entrada = name
+	// fmt.Println(CodigoEntrada.Entrada)
+	// fmt.Fprintf(w, "Name = %s\n", name)
+
 	if err := r.ParseForm(); err != nil {
 		fmt.Fprintf(w, "ParseForm() err: %v", err)
 		return
@@ -114,6 +95,21 @@ func Ejecutar(w http.ResponseWriter, r *http.Request) {
 }
 
 func EjecutarGramatica(entrada string) {
+	// is := antlr.NewInputStream(entrada)
+
+	// // Create the Lexer
+	// lexer := parser.NewAnalizadorLexer(is)
+
+	// // Read all tokens
+	// for {
+	// 	t := lexer.NextToken()
+	// 	if t.GetTokenType() == antlr.TokenEOF {
+	// 		break
+	// 	}
+	// fmt.Printf("%s (%q)\n",
+	// 	lexer.SymbolicNames[t.GetTokenType()], t.GetText())
+	// }
+
 	is := antlr.NewInputStream(entrada)
 	// Create the Lexer
 	lexer := parser.NewChemsLexer(is)
